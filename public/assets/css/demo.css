@@ -105,3 +105,9 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+
+/*Custom CSS*/
+.menu-vertical, .menu-vertical .menu-block, .menu-vertical .menu-inner > .menu-item, .menu-vertical .menu-inner > .menu-header {
+    width: 18.25rem;
+}

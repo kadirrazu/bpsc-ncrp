@@ -113,41 +113,46 @@
         <div>Data Processing</div>
         </a>
         <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Upload DATA Files</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Solve DATA</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Hex Generation</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="pages-account-settings-notifications.html" class="menu-link">
-            <div>Hex Matching</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Bulk Status</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Issue Logs</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div>Upload Regi File</div>
-            </a>
-        </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>DATA File Configurations</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Upload DATA Files</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Solve DATA</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Hex Generation</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="pages-account-settings-notifications.html" class="menu-link">
+                <div>Hex Matching</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Bulk Status</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Issue Logs</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                <div>Upload Regi File</div>
+                </a>
+            </li>
         </ul>
     </li>
     <!-- Result Processing -->
