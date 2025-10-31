@@ -29,6 +29,14 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     });
 
     Route::get('/profile', [UserProfileController::class, 'viewUserProfile']);
+    Route::get('/change-password', [UserProfileController::class, 'passwordChangeWindow']);
+    Route::post('/change-password', [UserProfileController::class, 'passwordChangeCommit']);
+
+    Route::get('/list-user', [UserProfileController::class, 'getUserList']);
+    Route::get('/add-user', [UserProfileController::class, 'addNewUser']);
+    Route::get('/view-user', [UserProfileController::class, 'viewUser']);
+    Route::get('/edit-user', [UserProfileController::class, 'editUser']);
+    Route::get('/delete-user', [UserProfileController::class, 'deleteUser']);
 
 });
 

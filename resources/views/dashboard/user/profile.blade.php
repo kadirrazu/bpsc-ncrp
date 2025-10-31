@@ -6,16 +6,15 @@
     <div class="card">
         <div class="table-responsive text-nowrap">
             <table class="table table-responsive">
-                <tr>
-                        <th>Field Name</th>
-                        <th>Data</th>
-                      </tr>
-                    </thead>
                 <tbody class="table-border-bottom-0">
                     <tr>
                         <td>Profile Photo</td>
                         <td>
-                            <img src="{{ asset('assets/img/avatars/' . $user->id . '.png') }}" alt="{{ $user->name }}" class="img-thumbnail rounded">
+                            @if( $user->profile_image != '' || $user->profile_image != NULL )
+                                <img src="{{ asset('assets/img/avatars/' . $user->profile_image) }}" alt="{{ $user->name }}" class="img-thumbnail rounded">
+                            @else
+                                <p class="text-info mb-0">Profile Photo is Missing!</p>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -54,6 +53,6 @@
     </div>
     <!--/ Basic Bootstrap Table -->
 
-    <a href="{{ url('change-password') }}" class="btn btn-secondary mt-3">Change Password</a>
+    <a href="{{ url('change-password') }}" class="btn btn-primary mt-3">Change Password</a>
 
 </x-layout-dashboard>

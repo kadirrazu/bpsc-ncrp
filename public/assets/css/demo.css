@@ -111,3 +111,9 @@
 .menu-vertical, .menu-vertical .menu-block, .menu-vertical .menu-inner > .menu-item, .menu-vertical .menu-inner > .menu-header {
     width: 18.25rem;
 }
+
+@media (min-width: 1200px) {
+    .layout-menu-fixed:not(.layout-menu-collapsed) .layout-page, .layout-menu-fixed-offcanvas:not(.layout-menu-collapsed) .layout-page {
+        padding-left: 18.25rem;
+    }
+}

@@ -27,7 +27,7 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="{{ url('/') }}" class="app-brand-link gap-2">                  
-                  <span class="app-brand-text demo text-body fw-bolder">BPSC RP</span>
+                  <span class="app-brand-text demo text-body fw-bolder">BPSC NC_RP</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -52,7 +52,7 @@
                 @endif
 
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email or Username</label>
+                  <label for="email" class="form-label">Email</label>
                   <input
                     type="text"
                     class="form-control"
