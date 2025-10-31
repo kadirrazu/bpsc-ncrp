@@ -3,11 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
-    public function logout()
+    /**
+     * Log the user out of the application.
+     */
+    public function logout(Request $request)
     {
-        return url('/');
-    }
-}
+
+        Auth::logout();
+    
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return redirect('/')->withErrors([
+            'email' => 'You have logged out from the system.',
+        ])->onlyInput('email');
+
+    } //End of function logout()
+
+    /**
+     * Process login request.
+     */
+    public function processLogin(Request $request)
+    {
+
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        $remember = false;
+
+        if($request->input('remember-me') == 'on'){
+            $remember = true;
+        }
+
+        if(Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+
+    } //End of function processLogin()
+
+} //End of Class 'SessionController'

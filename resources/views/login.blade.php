@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-template="vertical-menu-template-free">>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-template="vertical-menu-template-free">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -37,14 +37,27 @@
                 <p class="mb-4">Please sign-in to your account and start the job!</p>
               </div>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3"  method="POST" action="{{ url('/login') }}">
+
+                @csrf
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled text-center mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="email"
                     placeholder="Enter your email or username"
                     autofocus
                   />
@@ -67,7 +80,7 @@
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me"/>
                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                   </div>
                 </div>
