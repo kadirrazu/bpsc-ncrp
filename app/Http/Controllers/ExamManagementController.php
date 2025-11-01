@@ -11,21 +11,19 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UserProfileController extends Controller
+class ExamManagementController extends Controller
 {
-    public function viewUserProfile(Request $request)
+    public function addNewExam()
     {
-        $user = Auth::user();
-
+        return view('dashboard.exam.add');
+    }
+    
+    public function viewExamList(Request $request)
+    {
         return view('dashboard.user.profile', ['user' => $user]);
     }
 
-    public function passwordChangeWindow()
-    {
-        $user = Auth::user();
-
-        return view('dashboard.user.change-password', ['user' => $user]);
-    }
+    
 
     public function passwordChangeCommit(Request $request)
     {
@@ -168,3 +166,4 @@ class UserProfileController extends Controller
     }
 
 }
+

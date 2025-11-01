@@ -136,6 +136,11 @@
             </li>
             <li class="menu-item">
                 <a href="#" class="menu-link">
+                <div>E/H Error Report</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
                 <div>E/H Balance Report</div>
                 </a>
             </li>

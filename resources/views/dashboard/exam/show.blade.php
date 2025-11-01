@@ -53,6 +53,8 @@
     </div>
     <!--/ Basic Bootstrap Table -->
 
-    <a href="{{ url('change-password') }}" class="btn btn-primary mt-3">Change Password</a>
+    <a href="{{ url('list-user') }}" class="btn btn-primary mt-3">User List</a>
+    <a href="{{ url('edit-user/' . $user->id ) }}" class="btn btn-info mt-3">Edit User</a>
+    <a href="{{ url('delete-user/' . $user->id ) }}" class="btn btn-danger mt-3">Delete User</a>
 
 </x-layout-dashboard>

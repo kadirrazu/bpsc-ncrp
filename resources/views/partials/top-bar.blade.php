@@ -33,7 +33,7 @@ id="layout-navbar"
         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
         <div class="avatar avatar-online">
             @if( Auth::user()->profile_image != '' || Auth::user()->profile_image != NULL )
-                <img src="{{ asset( 'assets/img/avatars/' . Auth::user()->profile_image ) }}" alt class="w-px-40 h-auto rounded-circle" />
+                <img src="{{ asset( 'storage/' . Auth::user()->profile_image ) }}" alt class="w-px-40 h-auto rounded-circle" />
             @else
                 <img src="{{ asset( 'assets/img/avatars/dummy_avatar.png' ) }}" alt class="w-px-40 h-auto rounded-circle" />
             @endif
@@ -46,7 +46,7 @@ id="layout-navbar"
                     <div class="flex-shrink-0 me-3">
                     <div class="avatar avatar-online">
                         @if( Auth::user()->profile_image != '' || Auth::user()->profile_image != NULL )
-                            <img src="{{ asset( 'assets/img/avatars/' . Auth::user()->profile_image ) }}" alt class="w-px-40 h-auto rounded-circle" />
+                            <img src="{{ asset('storage/' . Auth::user()->profile_image ) }}" alt class="w-px-40 h-auto rounded-circle" />
                         @else
                             <img src="{{ asset( 'assets/img/avatars/dummy_avatar.png' ) }}" alt class="w-px-40 h-auto rounded-circle" />
                         @endif
