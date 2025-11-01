@@ -164,7 +164,7 @@ class UserProfileController extends Controller
  
         $user->delete();
 
-        return redirect('/list-user')->with('info', 'User was deleted successfully.');
+        return redirect('/list-user')->with('error', 'User was deleted successfully.');
     }
 
 }

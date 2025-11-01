@@ -43,6 +43,12 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/delete-user/{id}', [UserProfileController::class, 'deleteUserCommit']);
 
     Route::get('/add-exam', [ExamManagementController::class, 'addNewExam']);
+    Route::post('/add-exam', [ExamManagementController::class, 'addNewExamCommit']);
+    Route::get('/list-exam', [ExamManagementController::class, 'viewExamList']);
+    Route::get('/view-exam/{id}', [ExamManagementController::class, 'viewExam']);
+    Route::get('/edit-exam/{id}', [ExamManagementController::class, 'editExam']);
+    Route::post('/edit-exam', [ExamManagementController::class, 'editExamCommit']);
+    Route::post('/delete-exam/{id}', [ExamManagementController::class, 'deleteExamCommit']);
 
 });
 

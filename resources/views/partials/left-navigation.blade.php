@@ -23,18 +23,13 @@
 
             <ul class="menu-sub">
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="{{ url('add-exam') }}" class="menu-link">
                 <div>Add Exam</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#" class="menu-link">
-                <div>Set Current Exam</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                <div>Exam List</div>
+                <a href="{{ url('list-exam') }}" class="menu-link">
+                <div>Exam List / Set Current</div>
                 </a>
             </li>
             </ul>
@@ -52,7 +47,7 @@
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="#" class="menu-link">
-                    <div>DATA File Configurations</div>
+                    <div>DATA Line Configurations</div>
                     </a>
                 </li>
                 <li class="menu-item">

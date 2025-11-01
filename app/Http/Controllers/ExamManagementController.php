@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExamManagementRequest;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +12,7 @@ use Illuminate\Validation\Rules\File;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Exam;
 
 class ExamManagementController extends Controller
 {
@@ -17,152 +20,87 @@ class ExamManagementController extends Controller
     {
         return view('dashboard.exam.add');
     }
-    
-    public function viewExamList(Request $request)
+
+    public function addNewExamCommit(StoreExamManagementRequest $request)
     {
-        return view('dashboard.user.profile', ['user' => $user]);
-    }
-
-    
-
-    public function passwordChangeCommit(Request $request)
-    {
-        $request->validate([
-            'current_password' => ['required'],
-            'new_password' => ['required', 'min:8', 'confirmed'],
-        ]);
-
-        $user = Auth::user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'The provided current password does not match your actual password.']);
-        }
-
-        $user->update([
-            'password' => Hash::make($request->new_password),
-        ]);
-
-        return back()->with('success', 'Password updated successfully!');
-    }
-
-    public function getUserList()
-    {
-        $users = User::all();
-
-        return view('dashboard.user.list', [ 'users' => $users ]);
-    }
-
-    public function addNewUser()
-    {
-        return view('dashboard.user.add');
-    }
-
-    public function addNewUserCommit(Request $request)
-    {
-        $validated = $request->validate([
-            'profile_image' => [
-                'nullable',
-                File::image()
-                    ->min('1kb')
-                    ->max('200kb')
-                    ->dimensions(Rule::dimensions()->maxWidth(300)->maxHeight(300)),
-            ],
-            'name' => ['required','string'],
-            'designation' => ['required'],
-            'email' => ['required','email'],
-            'password' => ['required', 'min:8', 'confirmed'],
-        ]);
-
-        $profileImagePath = null;
-
-        if( $request->hasFile('profile_image') ){
-         
-            $profileImagePath = $request->file('profile_image')->store('profile_photos','public');
-
-        }
-
-        $user = new User();
-
-        $user->name = $validated['name'];
-        $user->designation = $validated['designation'];
-        $user->email = $validated['email'];
-        $user->password = Hash::make( $validated['password'] );
-        $user->profile_image = $profileImagePath;
-
-        $user->save();
-
-        return redirect('/list-user')->with('success', 'User was added successfully.');
-
-    }
-
-    public function viewUser(Request $request){
-
-        $user = User::findOrFail($request->id);
-
-        return view('dashboard.user.show', ['user' => $user]);
-
-    }
-
-    public function editUser(Request $request){
-
-        $user = User::findOrFail($request->id);
-
-        return view('dashboard.user.edit', ['user' => $user]);
-
-    }
-
-    public function editUserCommit(Request $request){
-
-        $validator = Validator::make($request->all(), [
-            'profile_image' => [
-                'nullable',
-                File::image()
-                    ->min('1kb')
-                    ->max('200kb')
-                    ->dimensions(Rule::dimensions()->maxWidth(300)->maxHeight(300)),
-            ],
-            'name' => ['required','string'],
-            'designation' => ['required'],
-            'email' => ['required','email'],
-            'password' => ['nullable','min:8','confirmed'],
-            'user_id' => ['required', 'numeric']
-        ]);
-
-        $validated = $validator->validated();
-
-        $user = User::findOrFail( $validated['user_id'] );
-
-        $user->name = $validated['name'];
-        $user->designation = $validated['designation'];
-        $user->email = $validated['email'];
         
+        $validatedData = $request->validated();
 
-        if( $request->hasFile('profile_image') ){
-         
-            $profileImagePath = $request->file('profile_image')->store('profile_photos','public');
-            $user->profile_image = $profileImagePath;
+        $exam = new Exam();
 
-        }
+        $exam->authority = $validatedData['exam-authority'];
+        $exam->entity = $validatedData['exam-entity'];
+        $exam->post_code = $validatedData['exam-post-code'];
+        $exam->post_name = $validatedData['exam-post-name'];
+        $exam->grade = $validatedData['exam-post-grade'];
+        $exam->type = $validatedData['exam-type'];
+        $exam->exam_date = $validatedData['exam-date'];
+        $exam->rp_date = $validatedData['exam-rp-date'];
+        $exam->total_candidate = $validatedData['exam-total-candidate'];
+        $exam->present_candidate = $validatedData['exam-present-candidate'];
+        $exam->rp_status = $validatedData['exam-rp-status'];
+        $exam->is_current = $validatedData['exam-rp-current'] == 'on' ? 1 : 0;
 
-        if( $request->has('password') &&  $request->password != '' ){
-         
-            $user->password = Hash::make( $validated['password'] );
+        $exam->save();
 
-        }
+        return redirect('/list-exam')->with('success', 'Exam was added successfully.');
+        
+    }
+    
+    public function viewExamList()
+    {
+        $exams = Exam::all();
 
-        $user->save();
+        return view('dashboard.exam.list', ['exams' => $exams]);
+    }
+    
+    public function viewExam(Request $request)
+    {
+        $exam = Exam::findOrFail($request->id);
 
-        return redirect('/list-user')->with('success', 'User was updated successfully.');
+        return view('dashboard.exam.show', ['exam' => $exam]);
+    }
+
+    public function editExam(Request $request){
+
+        $exam = Exam::findOrFail($request->id);
+
+        return view('dashboard.exam.edit', ['exam' => $exam]);
 
     }
 
-    public function deleteUserCommit(Request $request){
+    public function editExamCommit(StoreExamManagementRequest $request){
 
-        $user = User::find( $request->id );
+        $validatedData = $request->validated();
+
+        $exam = Exam::findOrFail( $request->exam_id );
+
+        $exam->authority = $validatedData['exam-authority'];
+        $exam->entity = $validatedData['exam-entity'];
+        $exam->post_code = $validatedData['exam-post-code'];
+        $exam->post_name = $validatedData['exam-post-name'];
+        $exam->grade = $validatedData['exam-post-grade'];
+        $exam->type = $validatedData['exam-type'];
+        $exam->exam_date = $validatedData['exam-date'];
+        $exam->rp_date = $validatedData['exam-rp-date'];
+        $exam->total_candidate = $validatedData['exam-total-candidate'];
+        $exam->present_candidate = $validatedData['exam-present-candidate'];
+        $exam->rp_status = $validatedData['exam-rp-status'];
+        $exam->is_current = (isset($validatedData['exam-rp-current']) && $validatedData['exam-rp-current'] == 'on') ? 1 : 0;
+
+        $exam->save();
+
+        return redirect('/list-exam')->with('success', 'Exam information was updated successfully.');
+
+    }
+
+    public function deleteExamCommit(Request $request){
+
+        $exam = Exam::find( $request->id );
  
-        $user->delete();
+        $exam->delete();
 
-        return redirect('/list-user')->with('info', 'User was deleted successfully.');
+        return redirect('/list-exam')->with('error', 'Exam information was deleted successfully.');
     }
 
 }

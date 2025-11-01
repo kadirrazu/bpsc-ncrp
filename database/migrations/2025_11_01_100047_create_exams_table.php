@@ -18,13 +18,13 @@ return new class extends Migration
             $table->integer('post_code')->unique();
             $table->string('post_name');
             $table->integer('grade');
-            $table->string('type');
-            $table->date('exam_date');
-            $table->date('rp_date');
-            $table->integer('total_candidate');
-            $table->integer('present_candidate');
-            $table->string('rp_status');
-            $table->boolean('is_current');
+            $table->string('type')->nullable();
+            $table->date('exam_date')->nullable();
+            $table->date('rp_date')->nullable();
+            $table->integer('total_candidate')->nullable();
+            $table->integer('present_candidate')->nullable();
+            $table->string('rp_status')->nullable();
+            $table->boolean('is_current')->default(0);
             $table->timestamps();
         });
     }
