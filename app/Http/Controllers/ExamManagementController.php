@@ -41,6 +41,10 @@ class ExamManagementController extends Controller
         $exam->rp_status = $validatedData['exam-rp-status'];
         $exam->is_current = $validatedData['exam-rp-current'] == 'on' ? 1 : 0;
 
+        if( $validatedData['exam-rp-current'] == 'on' ){
+            $this->setAllExamToNonCurrent();
+        }
+
         $exam->save();
 
         return redirect('/list-exam')->with('success', 'Exam was added successfully.');
@@ -49,7 +53,7 @@ class ExamManagementController extends Controller
     
     public function viewExamList()
     {
-        $exams = Exam::all();
+        $exams = Exam::paginate(10);
 
         return view('dashboard.exam.list', ['exams' => $exams]);
     }
@@ -101,6 +105,21 @@ class ExamManagementController extends Controller
         $exam->delete();
 
         return redirect('/list-exam')->with('error', 'Exam information was deleted successfully.');
+    }
+
+    public function setExamAsCurrent(Request $request){
+
+        $this->setAllExamToNonCurrent();
+
+        $exam = Exam::where('id', $request->id)->update(['is_current' => 1]);
+
+        return redirect('/list-exam')->with('info', 'Exam status was changed as current successfully.');
+
+    }
+
+    private function setAllExamToNonCurrent()
+    {
+        Exam::where('id', '>', 0)->update(['is_current' => 0]);
     }
 
 }

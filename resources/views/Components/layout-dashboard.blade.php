@@ -49,6 +49,8 @@
     </div>
     <!-- / Layout wrapper -->
 
+    @include('partials.fixed-push-alert')
+
     @include('partials.footer-assets')
 
   </body>

@@ -49,6 +49,7 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/edit-exam/{id}', [ExamManagementController::class, 'editExam']);
     Route::post('/edit-exam', [ExamManagementController::class, 'editExamCommit']);
     Route::post('/delete-exam/{id}', [ExamManagementController::class, 'deleteExamCommit']);
+    Route::get('/set-exam-as-current/{id}', [ExamManagementController::class, 'setExamAsCurrent']);
 
 });
 
