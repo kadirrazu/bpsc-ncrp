@@ -9,6 +9,7 @@ use App\Http\Controllers\SessionController;
 
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ExamManagementController;
+use App\Http\Controllers\DataProcessingController;
 
 Route::get('/', function () {
 
@@ -50,6 +51,8 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/edit-exam', [ExamManagementController::class, 'editExamCommit']);
     Route::post('/delete-exam/{id}', [ExamManagementController::class, 'deleteExamCommit']);
     Route::get('/set-exam-as-current/{id}', [ExamManagementController::class, 'setExamAsCurrent']);
+
+    Route::get('/config-data-line', [DataProcessingController::class, 'configureRawDataLines']);
 
 });
 

@@ -5,7 +5,7 @@
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <div class="table-responsive text-nowrap">
-            <table class="table table-responsive">
+            <table class="table table-responsive dataTable">
                 <thead>
                     <tr>
                         <th>Sr.</th>

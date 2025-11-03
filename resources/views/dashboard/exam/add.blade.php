@@ -30,7 +30,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Exam Management Authority:</label>
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
-                                    <input type="text" class="form-control" name="exam-authority" value="{{ old('exam-authority') ? old('exam-authority') : 'BPSC' }}">
+                                    <input type="text" class="form-control" name="exam-authority" value="{{ old('exam-authority') ? old('exam-authority') : 'Bangladesh Public Service Commission (BPSC)' }}">
                                 </div>
                                 @error('exam-authority')
                                     <p class="text-danger mt-2 mb-0">{{ $message }}</p>

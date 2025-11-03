@@ -132,3 +132,15 @@
   padding-right: 25px;
   padding-top: 20px;
 }
+
+.dt-layout-row .dt-layout-start{
+  padding-left: 25px;
+}
+
+.dt-layout-row .dt-layout-end{
+  padding-right: 25px;
+}
+
+#dt-length-0{
+  margin-right: 10px;
+}

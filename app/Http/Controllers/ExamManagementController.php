@@ -39,9 +39,9 @@ class ExamManagementController extends Controller
         $exam->total_candidate = $validatedData['exam-total-candidate'];
         $exam->present_candidate = $validatedData['exam-present-candidate'];
         $exam->rp_status = $validatedData['exam-rp-status'];
-        $exam->is_current = $validatedData['exam-rp-current'] == 'on' ? 1 : 0;
+        $exam->is_current = (isset($validatedData['exam-rp-current']) && $validatedData['exam-rp-current'] == 'on') ? 1 : 0;
 
-        if( $validatedData['exam-rp-current'] == 'on' ){
+        if( isset($validatedData['exam-rp-current']) && $validatedData['exam-rp-current'] == 'on' ){
             $this->setAllExamToNonCurrent();
         }
 
@@ -91,6 +91,10 @@ class ExamManagementController extends Controller
         $exam->present_candidate = $validatedData['exam-present-candidate'];
         $exam->rp_status = $validatedData['exam-rp-status'];
         $exam->is_current = (isset($validatedData['exam-rp-current']) && $validatedData['exam-rp-current'] == 'on') ? 1 : 0;
+
+        if( isset($validatedData['exam-rp-current']) && $validatedData['exam-rp-current'] == 'on' ){
+            $this->setAllExamToNonCurrent();
+        }
 
         $exam->save();
 

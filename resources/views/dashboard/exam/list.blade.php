@@ -10,14 +10,14 @@
             <div class="card">
                 
                 <div class="table-responsive text-nowrap">
-                    <table class="table table-responsive">
+                    <table class="table table-responsive dataTable">
                         <thead>
                             <tr>
                                 <th>Sr.</th>
                                 <th>Post Code</th>
                                 <th>Entity & Post Name</th>
                                 <th>Exam Date</th>
-                                <th>Current Status</th>
+                                <th class="text-center">Current Status</th>
                                 <th></th>
                                 <th>Action Buttons</th>
                             </tr>

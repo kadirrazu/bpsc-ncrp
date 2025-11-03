@@ -5,10 +5,16 @@
 <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
+<script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+
 <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
+
+<script>
+    let table = new DataTable('.dataTable');
+</script>
 
 <!-- Main JS -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
