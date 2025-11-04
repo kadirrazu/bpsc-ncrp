@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('post_code');
             $table->string('bnd_number');
             $table->string('file_type');
-            $table->string('file_name');
+            $table->string('file_name')->unique();
             $table->boolean('conversion_status')->default(0);
             $table->timestamps();
         });
