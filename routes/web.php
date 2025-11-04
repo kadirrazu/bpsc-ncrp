@@ -53,6 +53,8 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/set-exam-as-current/{id}', [ExamManagementController::class, 'setExamAsCurrent']);
 
     Route::get('/config-data-line', [DataProcessingController::class, 'configureRawDataLines']);
+    Route::get('/upload-data-file', [DataProcessingController::class, 'uploadDataFile']);
+    Route::post('/upload-data-file', [DataProcessingController::class, 'uploadDataFileProcessor']);
 
 });
 

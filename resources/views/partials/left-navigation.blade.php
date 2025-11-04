@@ -47,12 +47,17 @@
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="{{ url('/config-data-line') }}" class="menu-link">
-                    <div>DATA Line Configurations</div>
+                    <div>DATA Line Configuration</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="{{ url('/upload-data-file') }}" class="menu-link">
-                    <div>Upload DATA Files</div>
+                    <div>Upload DATA File</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/convert-data-file') }}" class="menu-link">
+                    <div>Convert DATA File</div>
                     </a>
                 </li>
                 <li class="menu-item">

@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('datalines', function (Blueprint $table) {
+        Schema::create('datafiles', function (Blueprint $table) {
             $table->id();
-            $table->string('script_type');
-            $table->string('part_title');
-            $table->integer('part_sequence');
-            $table->integer('length');
+            $table->integer('exam_id');
+            $table->integer('post_code');
+            $table->string('bnd_number');
+            $table->string('file_type');
+            $table->string('file_name');
+            $table->boolean('conversion_status')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datalines');
+        Schema::dropIfExists('datafiles');
     }
 };
