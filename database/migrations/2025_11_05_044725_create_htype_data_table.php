@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etype_data', function (Blueprint $table) {
+        Schema::create('htype_data', function (Blueprint $table) {
             $table->id();
             $table->integer('post_code');
             $table->integer('bnd_number');
@@ -19,16 +19,7 @@ return new class extends Migration
             $table->string('litho_code1');
             $table->string('scan_litho_code1');
             $table->string('hexcode_code1');
-            $table->string('center')->nullable();
-            $table->string('scan_center')->nullable();
-            $table->string('reg_number');
-            $table->string('scan_reg_number');
-            $table->boolean('reg_number_issue')->default(0);
-            $table->string('reg_number_status');
-            $table->string('set_code')->nullable();
-            $table->boolean('set_code_issue')->default(0);
-            $table->string('set_code_status')->nullable();
-            $table->string('scan_set_code')->nullable();
+            $table->string('answers')->nullable();
             $table->string('litho_code2');
             $table->string('scan_litho_code2');
             $table->string('hexcode_code2');
@@ -49,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('etype_data');
+        Schema::dropIfExists('htype_data');
     }
 };

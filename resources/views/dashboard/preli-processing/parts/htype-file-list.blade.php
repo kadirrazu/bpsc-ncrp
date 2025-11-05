@@ -1,5 +1,5 @@
 
-<div id="etype-file-list" class="mb-2">
+<div id="htype-file-list" class="mb-2">
 
     @php 
         $conversionStatus = true; 
@@ -7,7 +7,7 @@
         $postCode = ''; 
     @endphp
 
-    @if($datafiles->count() > 0)
+    @if( $datafiles->count() > 0 )
 
         <table class="table table-bordered">
             <thead>
@@ -22,7 +22,7 @@
                 @foreach($datafiles as $file)
                 <tr>
                     <td class="text-center">{{ $file->bnd_number }}</td>
-                    <td class="text-center text-warning">{{ strtoupper( $file->file_type ) }}</td>
+                    <td class="text-center text-info">{{ strtoupper( $file->file_type ) }}</td>
                     <td>{{ $file->file_name }}</td>
                     <td class="text-center">
 
@@ -49,14 +49,16 @@
 
         @if( $conversionStatus == false )
             <div class="text-end mt-4">
-                <a href="{{ url('convert-due-data-files/' . $examId . '/'. $postCode .'/e_type') }}" class="btn btn-success">Convert Due E-Type Files</a>
+                <a href="{{ url('convert-due-data-files/' . $examId . '/'. $postCode .'/h_type') }}" class="btn btn-warning">Convert Due H-Type Files</a>
             </div>
         @endif
 
     @else
 
-        <p class="alert alert-warning mb-1">There are no E-TYPE file(s) in the conversion queue.</p>
+        <p class="alert alert-warning mb-1">There are no H-TYPE file(s) in the conversion queue.</p>
 
     @endif
+
+    
 
 </div>

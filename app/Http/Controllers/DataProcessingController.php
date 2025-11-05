@@ -45,13 +45,13 @@ class DataProcessingController extends Controller
 
         if ($request->hasFile('datafiles')) {
 
-            $this->addDataFilesToDatabase($examInfo, $fileNames);
-
             foreach ($request->file('datafiles') as $file) {
                 $filename = $request->input('exam-id') . '_' . $request->input('post-code') . '_' . $file->getClientOriginalName();
                 $fileNames[] = $filename;
                 $file->storeAs( 'datafiles/' . $request->input('post-code') . '/' . strtoupper($request->input('file-type')), $filename, 'public' );
             }
+
+            $this->addDataFilesToDatabase($examInfo, $fileNames);
 
             return redirect()->back()->with('success', 'Data file was uploaded successfully!');
 
@@ -78,6 +78,16 @@ class DataProcessingController extends Controller
 
     }
 
+    public function getHtypeData(){
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $datafiles = Datafile::where('exam_id', $currentExam->id)->where('file_type', 'h_type')->get();
+
+        return view('dashboard.preli-processing.parts.htype-file-list', ['datafiles' => $datafiles]);
+
+    }
+
     public function convertDueDataFilesToSQL(Request $request)
     {
         $exam_id = $request->exam_id;
@@ -100,6 +110,20 @@ class DataProcessingController extends Controller
         }
 
         return redirect('convert-data-file')->with('error', 'There were some issues converting data files!');
+    }
+
+    public function generateIssueStatusView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.generate-issue-status', ['exam' => $currentExam]);
+    }
+
+    public function issueLogsView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.issue-logs', ['exam' => $currentExam]);
     }
 
     private function addDataFilesToDatabase(array $examInfo, array $fileNames)
@@ -157,9 +181,45 @@ class DataProcessingController extends Controller
                         'center' => $center,
                         'scan_center' => $center,
                         'reg_number' => $reg,
+                        'reg_number_status' => '',
                         'scan_reg_number' => $reg,
                         'set_code' => $set,
                         'scan_set_code' => $set,
+                        'litho_code2' => $litho2,
+                        'scan_litho_code2' => $litho2,
+                        'hexcode_code2' => '',
+                        'bullet' => $bullet,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            }
+        }
+
+        if( $contents != null && $file_type == 'h_type' )
+        {
+            $table = 'htype_data';
+            
+            $lines = explode("\n", $contents);
+
+            foreach ($lines as $line) 
+            {
+                if(trim($line) != "" && trim($line) != null)
+                {
+                    $scan_sr = substr($line, 0, 10);
+                    $litho1 = substr($line, 10, 31);
+                    $answers = substr($line, 41, 100);
+                    $litho2 = substr($line, 141, 31);
+                    $bullet = substr($line, 177, 9);
+
+                    $data[] = [
+                        'post_code' => $post_code,
+                        'bnd_number' => $bnd_number,
+                        'scan_sr' => $scan_sr,
+                        'litho_code1' => $litho1,
+                        'scan_litho_code1' => $litho1,
+                        'hexcode_code1' => '',
+                        'answers' => $answers,
                         'litho_code2' => $litho2,
                         'scan_litho_code2' => $litho2,
                         'hexcode_code2' => '',

@@ -9,7 +9,7 @@ $fileTypes = [
 
 <x-layout-dashboard>
 
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Data File / </span>Conversion Wizard</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Issues Marking / </span>Generate Issue Status</h4>
 
     <!-- Card -->
     <div class="card">
@@ -47,11 +47,36 @@ $fileTypes = [
                 <div class="row mb-4">
                     <label class="col-sm-2"></label>
                     <div class="col-sm-10">
-                        <div id="etype-file-list">
-                            <a class="btn btn-secondary my-2" href="{{ url('get-etype-data') }}" x-target="etype-file-list">LOAD E-TYPE DATA FILE INFORMATION</a>
+                        <div id="mark-regi-issues">
+                            <a class="btn btn-secondary my-2" href="{{ url('mark-regi-issues') }}" x-target="mark-regi-issues">
+                                MARK REG NUMBER ISSUES (E-TYPE DATA)
+                            </a>
                         </div>
-                        <div id="htype-file-list">
-                            <a class="btn btn-info my-2" href="{{ url('get-htype-data') }}" x-target="htype-file-list">LOAD H-TYPE DATA FILE INFORMATION</a>
+                        <div id="mark-setcode-issues">
+                            <a class="btn btn-secondary my-2" href="{{ url('mark-setcode-issues') }}" x-target="mark-setcode-issues">
+                                MARK SET CODE ISSUES (E-TYPE DATA)
+                            </a>
+                        </div>                        
+                        <div id="mark-center-issues">
+                            <a class="btn btn-secondary my-2" href="{{ url('mark-center-issues') }}" x-target="mark-center-issues">
+                                MARK CENTER CODE ISSUES (E-TYPE DATA)
+                            </a>
+                        </div>
+                        <div id="mark-lithocode-issues">
+                            <a class="btn btn-secondary my-2" href="{{ url('mark-lithocode-issues') }}" x-target="mark-lithocode-issues">
+                                MARK LITHO CODE ISSUES (E-TYPE DATA)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label class="col-sm-2"></label>
+                    <div class="col-sm-10">
+                        <div id="mark-lithocode-issues-htype">
+                            <a class="btn btn-info my-2" href="{{ url('mark-lithocode-issues-htype') }}" x-target="mark-lithocode-issues-htype">
+                                MARK LITHO CODE ISSUES (H-TYPE DATA)
+                            </a>
                         </div>
                     </div>
                 </div>

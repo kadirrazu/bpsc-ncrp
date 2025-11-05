@@ -64,6 +64,16 @@
                     <a href="{{ url('/solve-data') }}" class="menu-link">
                     <div>Solve DATA</div>
                     </a>
+                </li>                
+                <li class="menu-item">
+                    <a href="{{ url('/generate-issue-status') }}" class="menu-link">
+                    <div>Generate Issue Status</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/issue-logs') }}" class="menu-link">
+                    <div>Issue Logs</div>
+                    </a>
                 </li>
                 <li class="menu-item">
                     <a href="{{ url('/generate-hexcode') }}" class="menu-link">
@@ -73,16 +83,6 @@
                 <li class="menu-item">
                     <a href="{{ url('/matching-hexcode') }}" class="menu-link">
                     <div>Hex Matching</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ url('/bulk-status') }}" class="menu-link">
-                    <div>Bulk Status</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ url('/issue-log') }}" class="menu-link">
-                    <div>Issue Logs</div>
                     </a>
                 </li>
                 <li class="menu-item">

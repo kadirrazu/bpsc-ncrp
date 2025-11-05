@@ -57,7 +57,11 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/upload-data-file', [DataProcessingController::class, 'uploadDataFileProcessor']);
     Route::get('/convert-data-file', [DataProcessingController::class, 'convertDataFile']);
     Route::get('/get-etype-data', [DataProcessingController::class, 'getEtypeData']);
+    Route::get('/get-htype-data', [DataProcessingController::class, 'getHtypeData']);
     Route::get('/convert-due-data-files/{exam_id}/{post_code}/{file_type}', [DataProcessingController::class, 'convertDueDataFilesToSQL']);
+
+    Route::get('/generate-issue-status', [DataProcessingController::class, 'generateIssueStatusView']);
+    Route::get('/issue-logs', [DataProcessingController::class, 'issueLogsView']);
 
 });
 
