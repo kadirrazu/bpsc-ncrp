@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('scan_litho_code1');
             $table->string('hexcode_code1');
             $table->string('answers')->nullable();
+            $table->string('total_mark')->nullable();
+            $table->string('negative_mark')->nullable();
+            $table->string('extra_mark')->nullable();
+            $table->string('final_mark')->nullable();
             $table->string('litho_code2');
             $table->string('scan_litho_code2');
             $table->string('hexcode_code2');

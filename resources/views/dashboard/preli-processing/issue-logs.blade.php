@@ -53,49 +53,182 @@ $fileTypes = [
                                 <table class="table table-bordered">
                                     <tr>
                                         <td>Reg Number Issue</td>
-                                        <td class="text-center">5</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $regIssue = $issueReportTable->where('issue_type', 'reg_issue')->first(); @endphp
+                                                    
+                                            @if( isset($regIssue->issue_count) && $regIssue->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $regIssue->issue_count }}
+                                                </span>
+                                            @elseif( !isset($regIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $regIssue->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($regIssue->issue_count) && $regIssue->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($regIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Set Code Issue</td>
-                                        <td class="text-center">5</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $setIssue = $issueReportTable->where('issue_type', 'set_issue')->first(); @endphp
+                                                    
+                                            @if( isset($setIssue->issue_count) && $setIssue->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $setIssue->issue_count }}
+                                                </span>
+                                            @elseif( !isset($setIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $setIssue->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($setIssue->issue_count) && $setIssue->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($setIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Lithocode Issue</td>
-                                        <td class="text-center">5</td>
+                                        <td>Center Issue</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $centerIssue = $issueReportTable->where('issue_type', 'center_issue')->first(); @endphp
+                                                    
+                                            @if( isset($centerIssue->issue_count) && $centerIssue->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $centerIssue->issue_count }}
+                                                </span>
+                                            @elseif( !isset($centerIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $centerIssue->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($centerIssue->issue_count) && $centerIssue->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($centerIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Litho Code Issue</td>
+                                        <td class="text-center">
+                                            @php $lithoIssue = $issueReportTable->where('issue_type', 'litho_issue')->first(); @endphp
+                                                    
+                                            @if( isset($lithoIssue->issue_count) && $lithoIssue->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $lithoIssue->issue_count }}
+                                                </span>
+                                            @elseif( !isset($lithoIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $lithoIssue->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($lithoIssue->issue_count) && $lithoIssue->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($lithoIssue->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Hexcode Issue</td>
-                                        <td class="text-center">5</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $hexIssueE = $issueReportTable->where('issue_type', 'hexcode_issue')->first(); @endphp
+                                                    
+                                            @if( isset($hexIssueE->issue_count) && $hexIssueE->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $hexIssueE->issue_count }}
+                                                </span>
+                                            @elseif( !isset($hexIssueE->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $hexIssueE->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($hexIssueE->issue_count) && $hexIssueE->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($hexIssueE->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="col-md-6 mb-4">
-                                <h4><span class="text-warning">H-TYPE</span> DATA ISSUES -</h4>
+                                <h4><span class="text-primary">H-TYPE</span> DATA ISSUES -</h4>
                                 <table class="table table-bordered">
                                     <tr>
                                         <td>Lithocode Issue</td>
-                                        <td class="text-center">5</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $lithoIssueH = $issueReportTable->where('issue_type', 'litho_issue_htype')->first(); @endphp
+                                                    
+                                            @if( isset($lithoIssueH->issue_count) && $lithoIssueH->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $lithoIssueH->issue_count }}
+                                                </span>
+                                            @elseif( !isset($lithoIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $lithoIssueH->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($lithoIssueH->issue_count) && $lithoIssueH->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($lithoIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Hexcode Issue</td>
-                                        <td class="text-center">5</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $hexIssueH = $issueReportTable->where('issue_type', 'hexcode_issue_htype')->first(); @endphp
+                                                    
+                                            @if( isset($hexIssueH->issue_count) && $hexIssueH->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $hexIssueH->issue_count }}
+                                                </span>
+                                            @elseif( !isset($hexIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $hexIssueH->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if( isset($hexIssueH->issue_count) && $hexIssueH->issue_count > 0 )
+                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($hexIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </table>
@@ -104,18 +237,18 @@ $fileTypes = [
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h4><span class="text-warning">Hexcode Missmatch</span> ISSUES -</h4>
+                                <h4><span class="text-danger">Hexcode Missmatch</span> ISSUES [Combined Upper and Lower Part] -</h4>
                                 <table class="table table-bordered">
                                     <tr>
                                         <td>E-Type Hexcode Missmatch</td>
-                                        <td class="text-center">5</td>
+                                        <td class="text-center">-</td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-primary btn-sm">View List</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>H-Type Hexcode Missmatch</td>
-                                        <td class="text-center">5</td>
+                                        <td class="text-center">-</td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-primary btn-sm">View List</a>
                                         </td>

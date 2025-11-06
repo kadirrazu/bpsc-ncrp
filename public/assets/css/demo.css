@@ -171,3 +171,7 @@
 @keyframes rotate {
   100% { transform: rotate(360deg); }
 }
+
+.issue-handling a.btn{
+  min-width: 300px;
+}

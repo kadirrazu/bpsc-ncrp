@@ -61,11 +61,6 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ url('/solve-data') }}" class="menu-link">
-                    <div>Solve DATA</div>
-                    </a>
-                </li>                
-                <li class="menu-item">
                     <a href="{{ url('/generate-issue-status') }}" class="menu-link">
                     <div>Generate Issue Status</div>
                     </a>
@@ -73,6 +68,11 @@
                 <li class="menu-item">
                     <a href="{{ url('/issue-logs') }}" class="menu-link">
                     <div>Issue Logs</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/solve-data') }}" class="menu-link">
+                    <div>Solve DATA</div>
                     </a>
                 </li>
                 <li class="menu-item">

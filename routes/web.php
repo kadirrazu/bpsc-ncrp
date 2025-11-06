@@ -10,6 +10,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ExamManagementController;
 use App\Http\Controllers\DataProcessingController;
+use App\Http\Controllers\IssueManagementController;
 
 Route::get('/', function () {
 
@@ -60,8 +61,13 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/get-htype-data', [DataProcessingController::class, 'getHtypeData']);
     Route::get('/convert-due-data-files/{exam_id}/{post_code}/{file_type}', [DataProcessingController::class, 'convertDueDataFilesToSQL']);
 
-    Route::get('/generate-issue-status', [DataProcessingController::class, 'generateIssueStatusView']);
-    Route::get('/issue-logs', [DataProcessingController::class, 'issueLogsView']);
+    Route::get('/generate-issue-status', [IssueManagementController::class, 'generateIssueStatusView']);
+    Route::get('/issue-logs', [IssueManagementController::class, 'issueLogsView']);
+    Route::get('/mark-regi-issues', [IssueManagementController::class, 'markEtypeRegiIssues']);
+    Route::get('/mark-setcode-issues', [IssueManagementController::class, 'markEtypeSetCodeIssues']);
+    Route::get('/mark-center-issues', [IssueManagementController::class, 'markEtypeCenterCodeIssues']);
+    Route::get('/mark-lithocode-issues', [IssueManagementController::class, 'markEtypeLithoCodeIssues']);
+    Route::get('/mark-lithocode-issues-htype', [IssueManagementController::class, 'markHTypeLithoCodeIssues']);
 
 });
 

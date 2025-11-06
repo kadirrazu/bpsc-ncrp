@@ -47,36 +47,171 @@ $fileTypes = [
                 <div class="row mb-4">
                     <label class="col-sm-2"></label>
                     <div class="col-sm-10">
-                        <div id="mark-regi-issues">
-                            <a class="btn btn-secondary my-2" href="{{ url('mark-regi-issues') }}" x-target="mark-regi-issues">
-                                MARK REG NUMBER ISSUES (E-TYPE DATA)
-                            </a>
-                        </div>
-                        <div id="mark-setcode-issues">
-                            <a class="btn btn-secondary my-2" href="{{ url('mark-setcode-issues') }}" x-target="mark-setcode-issues">
-                                MARK SET CODE ISSUES (E-TYPE DATA)
-                            </a>
-                        </div>                        
-                        <div id="mark-center-issues">
-                            <a class="btn btn-secondary my-2" href="{{ url('mark-center-issues') }}" x-target="mark-center-issues">
-                                MARK CENTER CODE ISSUES (E-TYPE DATA)
-                            </a>
-                        </div>
-                        <div id="mark-lithocode-issues">
-                            <a class="btn btn-secondary my-2" href="{{ url('mark-lithocode-issues') }}" x-target="mark-lithocode-issues">
-                                MARK LITHO CODE ISSUES (E-TYPE DATA)
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                        <div class="row issue-handling">
+                            <div class="col-md-6">
+                                <div id="mark-regi-issues">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>REG NUMBER ISSUE CHECKING (E-TYPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
 
-                <div class="row mb-4">
-                    <label class="col-sm-2"></label>
-                    <div class="col-sm-10">
-                        <div id="mark-lithocode-issues-htype">
-                            <a class="btn btn-info my-2" href="{{ url('mark-lithocode-issues-htype') }}" x-target="mark-lithocode-issues-htype">
-                                MARK LITHO CODE ISSUES (H-TYPE DATA)
-                            </a>
+                                                    @php $regIssue = $issueReportTable->where('issue_type', 'reg_issue')->first(); @endphp
+                                                    
+                                                    @if( isset($regIssue->run_time) && $regIssue->run_time != '' )
+                                                        {{ $regIssue->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $regIssue->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-regi-issues') }}">
+                                                    MARK REG NUMBER ISSUES (E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div id="mark-setcode-issues">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>SET CODE ISSUE CHECKING (E-TYPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php $setIssue = $issueReportTable->where('issue_type', 'set_issue')->first(); @endphp
+                                                    
+                                                    @if( isset($setIssue->run_time) && $setIssue->run_time != '' )
+                                                        {{ $setIssue->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $setIssue->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-setcode-issues') }}">
+                                                    MARK SET CODE ISSUES (E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>                        
+                                <div id="mark-center-issues">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>CENTER CODE ISSUE CHECKING (E-TYPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php $centerIssue = $issueReportTable->where('issue_type', 'center_issue')->first(); @endphp
+                                                    
+                                                    @if( isset($centerIssue->run_time) && $centerIssue->run_time != '' )
+                                                        {{ $centerIssue->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $centerIssue->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-center-issues') }}">
+                                                    MARK CENTER CODE ISSUES (E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div id="mark-lithocode-issues">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>LITHO CODE ISSUE CHECKING (E-TYPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php $lithoIssue = $issueReportTable->where('issue_type', 'litho_issue')->first(); @endphp
+                                                    
+                                                    @if( isset($lithoIssue->run_time) && $lithoIssue->run_time != '' )
+                                                        {{ $lithoIssue->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssue->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-lithocode-issues') }}">
+                                                    MARK LITHO CODE ISSUES (E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="mark-lithocode-issues-htype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>LITHO CODE ISSUE CHECKING (H-TYPE)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php $lithoIssueH = $issueReportTable->where('issue_type', 'litho_issue_htype')->first(); @endphp
+                                                    
+                                                    @if( isset($lithoIssueH->run_time) && $lithoIssueH->run_time != '' )
+                                                        {{ $lithoIssueH->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssueH->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary my-2" href="{{ url('mark-lithocode-issues-htype') }}">
+                                                    MARK LITHO CODE ISSUES (H-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

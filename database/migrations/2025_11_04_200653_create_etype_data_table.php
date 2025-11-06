@@ -21,14 +21,16 @@ return new class extends Migration
             $table->string('hexcode_code1');
             $table->string('center')->nullable();
             $table->string('scan_center')->nullable();
+            $table->boolean('center_issue')->default(0);
+            $table->string('center_status')->nullable();
             $table->string('reg_number');
             $table->string('scan_reg_number');
             $table->boolean('reg_number_issue')->default(0);
             $table->string('reg_number_status');
             $table->string('set_code')->nullable();
+            $table->string('scan_set_code')->nullable();
             $table->boolean('set_code_issue')->default(0);
             $table->string('set_code_status')->nullable();
-            $table->string('scan_set_code')->nullable();
             $table->string('litho_code2');
             $table->string('scan_litho_code2');
             $table->string('hexcode_code2');

@@ -112,20 +112,6 @@ class DataProcessingController extends Controller
         return redirect('convert-data-file')->with('error', 'There were some issues converting data files!');
     }
 
-    public function generateIssueStatusView()
-    {
-        $currentExam = Exam::where('is_current', 1)->first();
-
-        return view('dashboard.preli-processing.generate-issue-status', ['exam' => $currentExam]);
-    }
-
-    public function issueLogsView()
-    {
-        $currentExam = Exam::where('is_current', 1)->first();
-
-        return view('dashboard.preli-processing.issue-logs', ['exam' => $currentExam]);
-    }
-
     private function addDataFilesToDatabase(array $examInfo, array $fileNames)
     {
         foreach($fileNames as $file){
@@ -180,11 +166,13 @@ class DataProcessingController extends Controller
                         'hexcode_code1' => '',
                         'center' => $center,
                         'scan_center' => $center,
+                        'center_status' => '',
                         'reg_number' => $reg,
-                        'reg_number_status' => '',
                         'scan_reg_number' => $reg,
+                        'reg_number_status' => '',
                         'set_code' => $set,
                         'scan_set_code' => $set,
+                        'set_code_status' => $set,
                         'litho_code2' => $litho2,
                         'scan_litho_code2' => $litho2,
                         'hexcode_code2' => '',
