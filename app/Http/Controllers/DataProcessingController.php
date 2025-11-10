@@ -177,7 +177,7 @@ class DataProcessingController extends Controller
                 $hexcode2 = $this->convertLithoCodeToHexCode($row->litho_code2);
             }
 
-            $updated = DB::table('etype_data')->where('id', $row->id)->update([
+            $updated = DB::table('htype_data')->where('id', $row->id)->update([
                 'hex_code1' => strtoupper($hexcode1),
                 'hex_code2' => strtoupper($hexcode2)
             ]);
@@ -185,6 +185,68 @@ class DataProcessingController extends Controller
 
         return redirect()->back()->with('success', 'All H-TYPE LithoCodes were converted to HexCodes successfully.');
 
+    }
+
+    public function solveDataView(Request $request)
+    {
+        $fileType = $request->file_type ?? 'e_type';
+        $issueType = $request->issue_type ?? 'all';
+        $tableName = 'etype_data';
+
+        if($fileType == 'h_type'){
+            $tableName = 'htype_data';
+        }
+
+        $eTypeData = DB::table($tableName)->where('center_issue', 1)->orWhere('reg_number_issue', 1)->orWhere('set_code_issue', 1)->orWhere('litho_issue', 1)->orWhere('hex_issue', 1)->get();
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.solve-data', [
+            'data' => $eTypeData,
+            'exam' => $currentExam,
+        ]);
+
+    }
+
+    public function issueDataView(Request $request)
+    {
+        $id = $request->id ?? '';
+        $fileType = $request->file_type ?? 'e_type';
+        $tableName = 'etype_data';
+
+        if($fileType == 'h_type'){
+            $tableName = 'htype_data';
+        }
+        
+        $data = DB::table($tableName)->where('id', $id)->first();
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.view-data', [
+            'data' => $data,
+            'exam' => $currentExam,
+        ]);
+    }
+
+    public function editIssueDataView(Request $request)
+    {
+        $id = $request->id ?? '';
+        $fileType = $request->file_type ?? 'e_type';
+        $tableName = 'etype_data';
+
+        if($fileType == 'h_type'){
+            $tableName = 'htype_data';
+        }
+        
+        $data = DB::table($tableName)->where('id', $id)->first();
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.edit-data', [
+            'data' => $data,
+            'exam' => $currentExam,
+            'file_type' => $fileType,
+        ]);
     }
 
     private function convertLithoCodeToHexCode( $lithoCode )
@@ -260,6 +322,7 @@ class DataProcessingController extends Controller
                     $data[] = [
                         'post_code' => $post_code,
                         'bnd_number' => $bnd_number,
+                        'scan_bnd_number' => $bnd_number,
                         'scan_sr' => $scan_sr,
                         'litho_code1' => $litho1,
                         'scan_litho_code1' => $litho1,
@@ -303,6 +366,7 @@ class DataProcessingController extends Controller
                     $data[] = [
                         'post_code' => $post_code,
                         'bnd_number' => $bnd_number,
+                        'scan_bnd_number' => $bnd_number,
                         'scan_sr' => $scan_sr,
                         'litho_code1' => $litho1,
                         'scan_litho_code1' => $litho1,

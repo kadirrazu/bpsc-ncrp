@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('htype_data', function (Blueprint $table) {
             $table->id();
             $table->integer('post_code');
-            $table->integer('bnd_number');
+            $table->string('bnd_number');
+            $table->string('scan_bnd_number')->nullable();
             $table->integer('scan_sr');
             $table->string('litho_code1');
             $table->string('scan_litho_code1');
