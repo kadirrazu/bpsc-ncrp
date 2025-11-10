@@ -112,6 +112,106 @@ class DataProcessingController extends Controller
         return redirect('convert-data-file')->with('error', 'There were some issues converting data files!');
     }
 
+    public function generateHexcodeView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.generate-hexcode', ['exam' => $currentExam]);
+    }
+
+    public function generateETypeHexcode(Request $request)
+    {
+        $postCode = $request->postcode;
+
+        $eTypeDataByPostCode = DB::table('etype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
+
+        foreach( $eTypeDataByPostCode as $row )
+        {
+            $hexcode1 = '';
+            $hexcode2 = '';
+
+            if( !empty($row->litho_code1) && empty($row->hex_code1) )
+            {
+                $hexcode1 = $this->convertLithoCodeToHexCode($row->litho_code1);
+            }
+            else{
+                continue;
+            }
+
+            if( !empty($row->litho_code2) && empty($row->hex_code2) )
+            {
+                $hexcode2 = $this->convertLithoCodeToHexCode($row->litho_code2);
+            }
+            else{
+                continue;
+            }
+
+            $updated = DB::table('etype_data')->where('id', $row->id)->update([
+                'hex_code1' => strtoupper($hexcode1),
+                'hex_code2' => strtoupper($hexcode2)
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'All E-TYPE LithoCodes were converted to HexCodes successfully.');
+
+    }
+
+    public function generateHTypeHexcode(Request $request)
+    {
+        $postCode = $request->postcode;
+
+        $hTypeDataByPostCode = DB::table('htype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
+
+        foreach( $hTypeDataByPostCode as $row )
+        {
+            $hexcode1 = '';
+            $hexcode2 = '';
+
+            if( !empty($row->litho_code1) && empty($row->hex_code1))
+            {
+                $hexcode1 = $this->convertLithoCodeToHexCode($row->litho_code1);
+            }
+
+            if( !empty($row->litho_code2) && empty($row->hex_code2) )
+            {
+                $hexcode2 = $this->convertLithoCodeToHexCode($row->litho_code2);
+            }
+
+            $updated = DB::table('etype_data')->where('id', $row->id)->update([
+                'hex_code1' => strtoupper($hexcode1),
+                'hex_code2' => strtoupper($hexcode2)
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'All H-TYPE LithoCodes were converted to HexCodes successfully.');
+
+    }
+
+    private function convertLithoCodeToHexCode( $lithoCode )
+    {
+
+        if( strlen($lithoCode) !== 31 ){
+            return '';
+        }
+
+        //Split lithocode
+        $lithoDirection = 'ltr';
+
+        $lithoPart1 = str_replace( ' ', '0', substr($lithoCode, 0, 4) );
+        $lithoPart2 = str_replace( ' ', '0', substr($lithoCode, 4, 4) );
+        $lithoPart3 = str_replace( ' ', '0', substr($lithoCode, 8, 4) );
+        $lithoPart4 = str_replace( ' ', '0', substr($lithoCode, 12, 4) );
+        $lithoPart5 = str_replace( ' ', '0', substr($lithoCode, 16, 4) );
+        $lithoPart6 = str_replace( ' ', '0', substr($lithoCode, 20, 4) );
+        $lithoPart7 = str_replace( ' ', '0', substr($lithoCode, 24, 4) );
+        $lithoPart8 = str_pad( str_replace( ' ', '0', substr($lithoCode, 28, 3) ), 4, '0' );
+
+        $hexCode = dechex( bindec($lithoPart1) ) . dechex( bindec($lithoPart2) ) . dechex( bindec($lithoPart3) ) . dechex( bindec($lithoPart4) ) . dechex( bindec($lithoPart5) ) . dechex( bindec($lithoPart6) ) . dechex( bindec($lithoPart7) ) . dechex( bindec($lithoPart8) );
+
+        return $hexCode;
+
+    }
+
     private function addDataFilesToDatabase(array $examInfo, array $fileNames)
     {
         foreach($fileNames as $file){
@@ -163,7 +263,7 @@ class DataProcessingController extends Controller
                         'scan_sr' => $scan_sr,
                         'litho_code1' => $litho1,
                         'scan_litho_code1' => $litho1,
-                        'hexcode_code1' => '',
+                        'hex_code1' => '',
                         'center' => $center,
                         'scan_center' => $center,
                         'center_status' => '',
@@ -175,7 +275,7 @@ class DataProcessingController extends Controller
                         'set_code_status' => $set,
                         'litho_code2' => $litho2,
                         'scan_litho_code2' => $litho2,
-                        'hexcode_code2' => '',
+                        'hex_code2' => '',
                         'bullet' => $bullet,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
@@ -206,11 +306,11 @@ class DataProcessingController extends Controller
                         'scan_sr' => $scan_sr,
                         'litho_code1' => $litho1,
                         'scan_litho_code1' => $litho1,
-                        'hexcode_code1' => '',
+                        'hex_code1' => '',
                         'answers' => $answers,
                         'litho_code2' => $litho2,
                         'scan_litho_code2' => $litho2,
-                        'hexcode_code2' => '',
+                        'hex_code2' => '',
                         'bullet' => $bullet,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()

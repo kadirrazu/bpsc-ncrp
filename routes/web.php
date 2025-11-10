@@ -69,5 +69,10 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/mark-lithocode-issues', [IssueManagementController::class, 'markEtypeLithoCodeIssues']);
     Route::get('/mark-lithocode-issues-htype', [IssueManagementController::class, 'markHTypeLithoCodeIssues']);
 
+
+    Route::get('/generate-hexcode', [DataProcessingController::class, 'generateHexcodeView']);
+    Route::get('/generate-etype-hexcodes/{postcode}', [DataProcessingController::class, 'generateETypeHexcode']);
+    Route::get('/generate-htype-hexcodes/{postcode}', [DataProcessingController::class, 'generateHTypeHexcode']);
+
 });
 

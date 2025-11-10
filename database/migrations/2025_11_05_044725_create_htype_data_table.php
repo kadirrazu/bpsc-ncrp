@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('scan_sr');
             $table->string('litho_code1');
             $table->string('scan_litho_code1');
-            $table->string('hexcode_code1');
+            $table->string('hex_code1');
             $table->string('answers')->nullable();
             $table->string('total_mark')->nullable();
             $table->string('negative_mark')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('final_mark')->nullable();
             $table->string('litho_code2');
             $table->string('scan_litho_code2');
-            $table->string('hexcode_code2');
+            $table->string('hex_code2');
             $table->string('bullet')->nullable();
             $table->boolean('litho_issue')->default(0);
             $table->string('litho_status')->nullable();
