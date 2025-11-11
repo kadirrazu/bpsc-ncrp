@@ -38,23 +38,23 @@
             <th>Error Status</th>
             <td>
                 @if(isset($data->center_issue) && $data->center_issue === 1)
-                    <span class="text-primary">[ CENTER ];</span>
+                    <span class="text-primary fw-bold">[ CENTER ];</span>
                 @endif
 
                 @if(isset($data->reg_number_issue) && $data->reg_number_issue === 1)
-                    <span class="text-warning">[ REG ];</span>
+                    <span class="text-warning fw-bold">[ REG ];</span>
                 @endif
 
                 @if(isset($data->set_code_issue) && $data->set_code_issue === 1)
-                    <span class="text-info">[ SET ];</span>
+                    <span class="text-info fw-bold">[ SET ];</span>
                 @endif
 
                 @if(isset($data->litho_issue) && $data->litho_issue === 1)
-                    <span class="text-danger">[ LITHO ];</span>
+                    <span class="text-danger fw-bold">[ LITHO ];</span>
                 @endif
 
                 @if(isset($data->hex_issue) && $data->hex_issue === 1)
-                    <span class="text-primary">[ HEX ];</span>
+                    <span class="text-primary fw-bold">[ HEX ];</span>
                 @endif
             </td>
         </tr>

@@ -76,6 +76,7 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/solve-data/{issue_type?}/{file_type?}', [DataProcessingController::class, 'solveDataView']);
     Route::get('/view-issue-data/{id}/{file_type}', [DataProcessingController::class, 'issueDataView']);
     Route::get('/edit-issue-data/{id}/{file_type}', [DataProcessingController::class, 'editIssueDataView']);
+    Route::post('/edit-data-processing', [DataProcessingController::class, 'editDataProcessing']);
 
 });
 

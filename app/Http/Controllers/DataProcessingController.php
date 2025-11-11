@@ -249,6 +249,22 @@ class DataProcessingController extends Controller
         ]);
     }
 
+    public function editDataProcessing(Request $request)
+    {
+        // Validate the incoming data
+        /*$request->validate([
+            'data_id' => 'required|integer',
+            'data_type' => 'required|string',
+            'bnd_number' => 'required|string',
+            'scan_sr' => 'required|integer',
+            'litho_code1' => 'required|string',
+            'litho_code2' => 'required|string',
+        ]);*/
+
+        // Return a JSON response
+        return response()->json(['message' => $request->all()]);
+    }
+
     private function convertLithoCodeToHexCode( $lithoCode )
     {
 

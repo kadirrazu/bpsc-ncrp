@@ -62,7 +62,7 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{ url('/generate-issue-status') }}" class="menu-link">
-                    <div>Generate Issue Status</div>
+                    <div>Generate DATA Issues</div>
                     </a>
                 </li>
                 <li class="menu-item">

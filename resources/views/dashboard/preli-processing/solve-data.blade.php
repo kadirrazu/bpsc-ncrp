@@ -83,15 +83,6 @@
                     </div>
                 </dialog>
 
-                <dialog class="border-none" x-init @dialog:open.window="$el.showModal()">
-                    <div id="edit-data"></div>
-                    <div class="text-right mt-2">
-                        <form method="dialog" novalidate class="mb-2">
-                        <button class="btn btn-primary">Cancel</button>
-                    </form>
-                    </div>
-                </dialog>
-
             </div>
 
             @endif
