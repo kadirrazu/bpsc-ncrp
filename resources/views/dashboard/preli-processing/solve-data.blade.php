@@ -1,3 +1,5 @@
+<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+
 <x-layout-dashboard>
 
     <h4 class="fw-bold pt-3">
@@ -91,5 +93,46 @@
 
     </div>
     <!--/ Card -->
+
+    <script>
+        $(document).ready(function(){
+            $(document).on('click', '#editDataBtn', function(e) {
+
+                e.preventDefault();
+
+                let formField = [];
+
+                let parentForm = $(this).closest('form'); 
+
+                parentForm.find('input').each(function() {
+                    let fieldName = $(this).attr('name');
+                    let fieldValue = $(this).val();
+                    formField[fieldName] = fieldValue;
+                });
+
+                var formData = new FormData(parentForm);
+                formData.append('formField', JSON.stringify(formField));
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN':  parentForm.find('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{ url('edit-data-processing') }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+                        console.log("Success:", response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error:", textStatus, errorThrown);
+                    }
+                });
+
+            });
+        });
+    </script>
 
 </x-layout-dashboard>

@@ -73,6 +73,14 @@ class DatalineSeeder extends Seeder
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now() 
                 ],
+                [
+                    'script_type' => 'e_type', 
+                    'part_title' => 'litho_direction', 
+                    'part_sequence' => 1, 
+                    'length' => 1, 
+                    'created_at' => Carbon::now(), 
+                    'updated_at' => Carbon::now() 
+                ],
         ]);
 
         DB::table('datalines')->insert(
@@ -114,6 +122,14 @@ class DatalineSeeder extends Seeder
                     'part_title' => 'bullet', 
                     'part_sequence' => 5, 
                     'length' => 9, 
+                    'created_at' => Carbon::now(), 
+                    'updated_at' => Carbon::now() 
+                ],
+                [
+                    'script_type' => 'h_type', 
+                    'part_title' => 'litho_direction', 
+                    'part_sequence' => 1, 
+                    'length' => 1, 
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now() 
                 ],

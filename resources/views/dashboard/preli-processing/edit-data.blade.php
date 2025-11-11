@@ -1,4 +1,4 @@
-<form id="edit-data-{{ $data->id }}" x-target method="post" action="{{ url('edit-data-processing') }}" aria-label="Edit Data">
+<form id="edit-data-{{ $data->id }}" method="post" action="{{ url('edit-data-processing') }}" aria-label="Edit Data">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <button class="btn btn-success">Save Changes</button>
+    <button class="btn btn-success" id="editDataBtn">Save Changes</button>
 
 </form>
 

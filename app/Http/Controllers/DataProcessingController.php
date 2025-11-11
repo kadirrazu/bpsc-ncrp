@@ -262,7 +262,8 @@ class DataProcessingController extends Controller
         ]);*/
 
         // Return a JSON response
-        return response()->json(['message' => $request->all()]);
+        $data = $request->all();
+        return $data;
     }
 
     private function convertLithoCodeToHexCode( $lithoCode )
