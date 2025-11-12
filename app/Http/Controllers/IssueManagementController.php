@@ -55,7 +55,12 @@ class IssueManagementController extends Controller
         //Set all reg_number issue report to empty first.
         DB::table('issue_generation_report')->where('exam_id', $currentExam->id)->where('issue_type', 'reg_issue')->delete();
 
-        $eTypeDataSet = DB::table('etype_data')->where('post_code', $currentExam->post_code)->get();
+        $eTypeDataSet = DB::table('etype_data')->select('id','reg_number')->where('post_code', $currentExam->post_code)->get();
+
+        $candidatesDataSet = DB::table('candidates')->select('reg_number')->where('post_code', $currentExam->post_code)->get();
+
+        $configRegNumber = DB::table('datalines')->where('script_type', 'e_type')->where('part_title', 'reg_number')->first();
+        $regNumberLength = $configRegNumber->length ?? 0;
 
         //Iterate through each rows of the E-TYPE data table.
         foreach( $eTypeDataSet as $dataRow )
@@ -64,37 +69,54 @@ class IssueManagementController extends Controller
             $issueStatus = '';
 
             //Check if the reg_number is in PROPER LENGTH
-            if( strlen(trim($dataRow->reg_number)) !== 6 ){
+            if( strlen(trim($dataRow->reg_number)) !== $regNumberLength ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>Invalid REG NUMBER Length.</li>';
+                $issueStatus = trim($issueStatus) . '-INVALID REG NUMBER LENGTH;';
             }
 
             //Check if the reg_number contains INVALID CHARACTERS
             if( strpos(trim($dataRow->reg_number), ' ') !== false || strpos(trim($dataRow->reg_number), '*') !== false ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>REG NUMBER Contains [ EMPTY/* ] Character(s).</li>';
+                $issueStatus = trim($issueStatus) . '-REG NUMBER CONTAINS [ EMPTY/* ];';
+            }
+
+            //INVALID in respect with REGI DATA candidatesDataSet
+            if(  $candidatesDataSet->where('reg_number', $dataRow->reg_number)->count() < 1 ){
+                $issue = 1;
+                $issueStatus = trim($issueStatus) . '-MISSMATCH WITH REGI DATA;';
             }
             
             //Check if the reg_number is DUPLICATE
             if( $eTypeDataSet->where('reg_number', $dataRow->reg_number)->count() > 1 ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>DUPLICATE REG NUMBER.</li>';
+                $issueStatus = trim($issueStatus) . '-DUPLICATE REG NUMBER;';
             }
 
             //Update reg_number Status if there is any of the above ISSUE exists
             if( $issue === 1 )
             {
 
-                $setIssue = DB::table('etype_data')->where('id', $dataRow->id)->update([
+                $regIssueArray[] = [
+                    'id' => $dataRow->id,
                     'reg_number_issue' => 1,
                     'reg_number_status' => $issueStatus
-                ]);
+                ];
 
                 $issueCount++;
 
             }
 
         }
+
+        DB::transaction(function () use ($regIssueArray) {
+            foreach ($regIssueArray as $data) {
+                DB::table('etype_data')->where('id', $data['id'])
+                ->update([
+                    'reg_number_issue' => $data['reg_number_issue'],
+                    'reg_number_status' => $data['reg_number_status']
+                ]);
+            }
+        });
 
         //Update issue generation record timestamp and latest issue count
         DB::table('issue_generation_report')->insert([
@@ -136,7 +158,7 @@ class IssueManagementController extends Controller
             //Check if the reg_number contains INVALID CHARACTERS
             if( strpos(trim($dataRow->set_code), ' ') !== false || strpos(trim($dataRow->set_code), '*') !== false ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>SET CODE contains [ EMPTY/* ] Character.</li>';
+                $issueStatus = trim($issueStatus) . '-SET CODE CONTAINS [ EMPTY/* ];';
             }
 
             //Update reg_number Status if there is any of the above ISSUE exists
@@ -195,7 +217,7 @@ class IssueManagementController extends Controller
             //Check if the reg_number contains INVALID CHARACTERS
             if( strpos(trim($dataRow->center), ' ') !== false || strpos(trim($dataRow->center), '*') !== false ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>CENTER CODE contains [ EMPTY/* ] Character.</li>';
+                $issueStatus = trim($issueStatus) . '-CENTER CODE CONTAINS [ EMPTY/* ];';
             }
 
             //Update reg_number Status if there is any of the above ISSUE exists
@@ -256,7 +278,7 @@ class IssueManagementController extends Controller
             //Check if the litho_code1 does not match with litho_code2
             if( strlen($lithoCode1) !== strlen($lithoCode2) || trim($lithoCode1) !== trim($lithoCode2) ){
                 $issue = 1;
-                $issueStatus = trim($issueStatus) . '<li>LITHO_CODE-1 and LITHO_CODE-2 does not matched.</li>';
+                $issueStatus = trim($issueStatus) . '-SELF LITHOCODE MISSMATCH;';
             }
 
             //Update reg_number Status if there is any of the above ISSUE exists

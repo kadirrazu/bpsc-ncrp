@@ -14,6 +14,7 @@ $fileTypes = [
     <!-- Card -->
     <div class="card">
         <div class="card-body">
+            
             @if( !isset($exam) || $exam == null) 
 
                 <p class="alert alert-danger mb-0">Please add an exam first and set that as Current Task for processing.</p>

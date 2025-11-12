@@ -76,7 +76,7 @@ class DatalineSeeder extends Seeder
                 [
                     'script_type' => 'e_type', 
                     'part_title' => 'litho_direction', 
-                    'part_sequence' => 1, 
+                    'part_sequence' => 10, 
                     'length' => 1, 
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now() 
@@ -121,14 +121,14 @@ class DatalineSeeder extends Seeder
                     'script_type' => 'h_type', 
                     'part_title' => 'bullet', 
                     'part_sequence' => 5, 
-                    'length' => 9, 
+                    'length' => 14,
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now() 
                 ],
                 [
                     'script_type' => 'h_type', 
                     'part_title' => 'litho_direction', 
-                    'part_sequence' => 1, 
+                    'part_sequence' => 6, 
                     'length' => 1, 
                     'created_at' => Carbon::now(), 
                     'updated_at' => Carbon::now() 

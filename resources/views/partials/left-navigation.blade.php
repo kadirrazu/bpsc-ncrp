@@ -61,6 +61,11 @@
                     </a>
                 </li>
                 <li class="menu-item">
+                    <a href="{{ url('/upload-regi-file') }}" class="menu-link">
+                    <div>Upload Regi File</div>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="{{ url('/generate-issue-status') }}" class="menu-link">
                     <div>Generate DATA Issues</div>
                     </a>
@@ -78,11 +83,6 @@
                 <li class="menu-item">
                     <a href="{{ url('/generate-hexcode') }}" class="menu-link">
                     <div>Hex Generation</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ url('/upload-regi-file') }}" class="menu-link">
-                    <div>Upload Regi File</div>
                     </a>
                 </li>
             </ul>

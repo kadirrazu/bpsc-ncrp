@@ -56,6 +56,9 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/config-data-line', [DataProcessingController::class, 'configureRawDataLines']);
     Route::get('/configure-data-line-etype', [DataProcessingController::class, 'configureETypeRawDataLines']);
     Route::get('/configure-data-line-htype', [DataProcessingController::class, 'configureHTypeRawDataLines']);
+    Route::post('/update-data-line-etype', [DataProcessingController::class, 'updateETypeRawDataLine']);
+    Route::post('/update-data-line-htype', [DataProcessingController::class, 'updateHTypeRawDataLine']);
+
     Route::get('/upload-data-file', [DataProcessingController::class, 'uploadDataFile']);
     Route::post('/upload-data-file', [DataProcessingController::class, 'uploadDataFileProcessor']);
     Route::get('/convert-data-file', [DataProcessingController::class, 'convertDataFile']);
@@ -88,6 +91,10 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/edit-issue-data/{id}/{file_type}', [DataProcessingController::class, 'editIssueDataView']);
     Route::post('/edit-data-processing', [DataProcessingController::class, 'editDataProcessing']);
     Route::post('/edit-data-processing-h', [DataProcessingController::class, 'editDataProcessingH']);
+
+    Route::get('/upload-regi-file', [DataProcessingController::class, 'uploadRegiFileView']);
+    Route::post('/upload-regi-file', [DataProcessingController::class, 'uploadRegiFileProcessor']);
+    Route::get('/convert-regi-file', [DataProcessingController::class, 'convertRegiFile']);
 
 });
 

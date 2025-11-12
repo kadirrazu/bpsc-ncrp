@@ -1,5 +1,3 @@
-<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
-
 <x-layout-dashboard>
 
     <h4 class="fw-bold pt-3">
@@ -114,7 +112,7 @@
                     success: function(response) {
                         if(response.status == 'success'){
                             sibling = parentForm.parent('.form-parent-div');
-                            sibling.html('<span class="text-success fw-bold">Data was saved successfully.</span>');
+                            sibling.html('<span class="text-success fw-bold">Data was solved successfully.</span>');
                             parentForm.hide();
                             $('tr#row-id-'+formFields.data_id).addClass('data-solved');
                             $('a#edit-btn-'+formFields.data_id).fadeOut();

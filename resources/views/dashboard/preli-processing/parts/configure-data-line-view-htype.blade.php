@@ -10,9 +10,9 @@
 
     <div class="data-reorder-container">
 
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">E-Type Dataline Parts / </span>Reorder || Add Rows</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">H-Type Dataline Parts / </span>Reorder || Add Rows</h4>
 
-        <form method="POST" method="POST" action="{{ url('update-data-line-etype') }}">
+        <form method="POST" method="POST" action="{{ url('update-data-line-htype') }}">
 
             @csrf
 
@@ -50,7 +50,7 @@
             <em>"litho_direction" field should be as last entry. Length value in this case shall be "1" for "LTR" and "2" for "RTL". This value decides litho code conversion direction from LeftToRight or RightToLeft.</em>
             <br>
             <br>
-            <em>For E-Type data, other parts title can be: scan_sr, litho_code1, center, reg_number, set_code, litho_code2, bullet</em>
+            <em>For H-Type data, other parts title can be: scan_sr, litho_code1, answers, litho_code2, bullet</em>
         </div>
     </div>
 

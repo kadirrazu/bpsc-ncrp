@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Exam;
 use App\Models\Datafile;
+use App\Models\Regifile;
+use App\Models\Candidate;
 
 use Carbon\Carbon;
 
@@ -23,6 +25,51 @@ class DataProcessingController extends Controller
     {
         $eTypeParts = DB::table('datalines')->where('script_type', 'e_type')->orderBy('part_sequence', 'ASC')->get();
         return view('dashboard.preli-processing.parts.configure-data-line-view-etype', ['parts' => $eTypeParts]);
+    }
+
+    public function configureHTypeRawDataLines()
+    {
+        $hTypeParts = DB::table('datalines')->where('script_type', 'h_type')->orderBy('part_sequence', 'ASC')->get();
+
+        return view('dashboard.preli-processing.parts.configure-data-line-view-htype', ['parts' => $hTypeParts]);
+    }
+
+    public function updateETypeRawDataLine(Request $request)
+    {
+       $data = $request->validate([
+            'scripts' => 'required|array',
+            'scripts.*.script_type' => 'required|string',
+            'scripts.*.part_title' => 'required|string',
+            'scripts.*.part_sequence' => 'required|integer',
+            'scripts.*.length' => 'required|integer',
+        ]);
+
+         DB::table('datalines')->where('script_type', 'e_type')->delete();
+
+        foreach ($data['scripts'] as $row) {
+            DB::table('datalines')->insert($row);
+        }
+
+        return redirect()->back()->with('success', 'E-TYPE DATA LINE PARTS WERE SAVED SUCCESSFULLY.');
+    }
+
+    public function updateHTypeRawDataLine(Request $request)
+    {
+       $data = $request->validate([
+            'scripts' => 'required|array',
+            'scripts.*.script_type' => 'required|string',
+            'scripts.*.part_title' => 'required|string',
+            'scripts.*.part_sequence' => 'required|integer',
+            'scripts.*.length' => 'required|integer',
+        ]);
+
+         DB::table('datalines')->where('script_type', 'h_type')->delete();
+
+        foreach ($data['scripts'] as $row) {
+            DB::table('datalines')->insert($row);
+        }
+
+        return redirect()->back()->with('success', 'H-TYPE DATA LINE PARTS WERE SAVED SUCCESSFULLY.');
     }
 
     public function uploadDataFile()
@@ -474,17 +521,69 @@ class DataProcessingController extends Controller
         {
             $lines = explode("\n", $contents);
 
+            $dataLineConfigs = DB::table('datalines')->where('script_type', 'e_type')->orderBy('part_sequence', 'ASC')->get();
+
             foreach ($lines as $line) 
             {
+                $start = 0;
+
+                $scan_sr = null;
+                $litho1 = null;
+                $center = null;
+                $reg = null;
+                $set = null;
+                $litho2 = null;
+                $bullet = null;
+                $lithDirection = 'LTR';
+                
                 if(trim($line) != "" && trim($line) != null)
                 {
-                    $scan_sr = substr($line, 0, 10);
-                    $litho1 = substr($line, 10, 31);
-                    $center = substr($line, 41, 1);
-                    $reg = substr($line, 42, 6);
-                    $set = substr($line, 48, 1);
-                    $litho2 = substr($line, 49, 31);
-                    $bullet = substr($line, 80, 9);
+                    foreach( $dataLineConfigs as $config )
+                        {
+                        if( $config->part_title === 'scan_sr' )
+                        {
+                            $scan_sr = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_code1' )
+                        {
+                            $litho1 = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'center' )
+                        {
+                            $center = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'reg_number' )
+                        {
+                            $reg = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'set_code' )
+                        {
+                            $set = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_code2' )
+                        {
+                            $litho2 = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'bullet' )
+                        {
+                            $bullet = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_direction' )
+                        {
+                            if($config->length === 2)
+                            {
+                                $lithDirection = 'RTL';
+                            }
+                            
+                        }
+                    }
 
                     $data[] = [
                         'post_code' => $post_code,
@@ -502,7 +601,6 @@ class DataProcessingController extends Controller
                         'reg_number_status' => '',
                         'set_code' => $set,
                         'scan_set_code' => $set,
-                        'set_code_status' => $set,
                         'litho_code2' => $litho2,
                         'scan_litho_code2' => $litho2,
                         'hex_code2' => '',
@@ -517,18 +615,60 @@ class DataProcessingController extends Controller
         if( $contents != null && $file_type == 'h_type' )
         {
             $table = 'htype_data';
+
+            $dataLineConfigs = DB::table('datalines')->where('script_type', 'h_type')->orderBy('part_sequence', 'ASC')->get();
             
             $lines = explode("\n", $contents);
 
             foreach ($lines as $line) 
             {
+                $start = 0;
+
+                $scan_sr = null;
+                $litho1 = null;
+                $answers = null;
+                $litho2 = null;
+                $bullet = null;
+                $lithDirection = 'LTR';
+
                 if(trim($line) != "" && trim($line) != null)
                 {
-                    $scan_sr = substr($line, 0, 10);
-                    $litho1 = substr($line, 10, 31);
-                    $answers = substr($line, 41, 100);
-                    $litho2 = substr($line, 141, 31);
-                    $bullet = substr($line, 177, 9);
+                    foreach( $dataLineConfigs as $config )
+                        {
+                        if( $config->part_title === 'scan_sr' )
+                        {
+                            $scan_sr = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_code1' )
+                        {
+                            $litho1 = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'answers' )
+                        {
+                            $answers = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_code2' )
+                        {
+                            $litho2 = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'bullet' )
+                        {
+                            $bullet = substr($line, $start, $config->length);
+                            $start += $config->length;
+                        }
+                        else if( $config->part_title === 'litho_direction' )
+                        {
+                            if($config->length === 2)
+                            {
+                                $lithDirection = 'RTL';
+                            }
+                            
+                        }
+                    }
 
                     $data[] = [
                         'post_code' => $post_code,
@@ -554,6 +694,107 @@ class DataProcessingController extends Controller
 
         return true;
 
+    }
+
+    public function uploadRegiFileView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+        $regiFile = Regifile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->first();
+
+        return view('dashboard.preli-processing.upload-regi-file', [
+            'exam' => $currentExam,
+            'regiFile' => $regiFile,
+        ]);
+    }
+
+    public function uploadRegiFileProcessor(Request $request)
+    {
+        $validated = $request->validate([
+            'exam-id' => 'required',
+            'post-code' => 'required',
+            'file-type' => 'required',
+            'regifile' => 'required|file',
+            'regifile.*' => 'extensions:csv',
+        ]);
+
+        $examInfo = [
+            'exam_id' => $request->input('exam-id'),
+            'post_code' => $request->input('post-code'),
+            'file_type' => $request->input('file-type'),
+        ];
+
+        if ($request->hasFile('regifile')) {
+
+            $filename = $request->input('exam-id') . '_' . $request->input('post-code') . '_' . $request->file('regifile')->getClientOriginalName();
+            
+            $request->file('regifile')->storeAs( 'datafiles/' . $request->input('post-code') . '/' . strtoupper($request->input('file-type')), $filename, 'public' );
+
+            $inserted = Regifile::create([
+                'exam_id' => $examInfo['exam_id'],
+                'post_code' => $examInfo['post_code'],
+                'file_type' => $examInfo['file_type'],
+                'file_name' => $filename,
+            ]);
+
+            return redirect()->back()->with('success', 'Regi file was uploaded successfully!');
+
+        }
+
+        return redirect()->back()->with('error', 'No file was uploaded! Check for issues and try again.');
+
+    }
+
+    public function convertRegiFile()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+        $regiFile = Regifile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->first();
+
+        $post_code = $regiFile->post_code;
+        $file_type = $regiFile->file_type;
+        $file_name = $regiFile->file_name;
+
+        $contents = '';
+
+        if( Storage::disk('public')->exists('datafiles/'.$post_code.'/'.strtoupper($file_type).'/'.$file_name) ) 
+        {
+            $contents = Storage::disk('public')->get('datafiles/'.$post_code.'/'.strtoupper($file_type).'/'.$file_name);
+        }
+        else{
+            return redirect()->back()->with('error', '404 - File not found.');
+        }
+
+        // Get file content
+        $csvData = $contents;
+
+        // Convert CSV string to array
+        $rows = array_map('str_getcsv', explode("\n", trim($csvData)));
+
+        // Optionally extract headers
+        $header = array_shift($rows);
+
+        // Combine headers with data rows (associative array)
+        $data = [];
+        $count = 0;
+        foreach ($rows as $row) {
+            if (count($row) == count($header)) {
+                $data[$count] = array_combine($header, $row);
+                $data[$count]['exam_id'] = $currentExam->id;
+                $data[$count]['post_code'] = $currentExam->post_code;
+                $count++;
+            }
+        }
+
+        DB::table('candidates')->truncate();
+
+        $result = Candidate::insert($data);
+
+        if($result){
+            Regifile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->update([
+                'conversion_status' => 1
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'CSV files data were converted and placed to database table successfully.');
     }
 
 }

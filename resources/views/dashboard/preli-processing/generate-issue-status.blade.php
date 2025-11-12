@@ -9,7 +9,7 @@ $fileTypes = [
 
 <x-layout-dashboard>
 
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Issues Marking / </span>Generate Issue Status</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Issues Marking / </span>Identify Data Issues</h4>
 
     <!-- Card -->
     <div class="card">

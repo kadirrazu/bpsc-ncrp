@@ -38,23 +38,28 @@
             <th>Error Status</th>
             <td>
                 @if(isset($data->center_issue) && $data->center_issue === 1)
-                    <span class="text-primary fw-bold">[ CENTER ];</span>
+                    <span class="text-primary fw-bold">[ CENTER ];</span><br>
+                    <span class="text-primary">[ {{ $data->center_status }} ];</span><br>
                 @endif
 
                 @if(isset($data->reg_number_issue) && $data->reg_number_issue === 1)
-                    <span class="text-warning fw-bold">[ REG ];</span>
+                    <span class="text-warning fw-bold">[ REG ];</span><br>
+                    <span class="text-warning">[ {{ $data->reg_number_status }} ];</span><br>
                 @endif
 
                 @if(isset($data->set_code_issue) && $data->set_code_issue === 1)
-                    <span class="text-info fw-bold">[ SET ];</span>
+                    <span class="text-info fw-bold">[ SET ];</span><br>
+                    <span class="text-info">[ {{ $data->set_code_status }} ];</span><br>
                 @endif
 
                 @if(isset($data->litho_issue) && $data->litho_issue === 1)
-                    <span class="text-danger fw-bold">[ LITHO ];</span>
+                    <span class="text-danger fw-bold">[ LITHO ];</span><br>
+                    <span class="text-danger">[ {{ $data->litho_status }} ];</span><br>
                 @endif
 
                 @if(isset($data->hex_issue) && $data->hex_issue === 1)
-                    <span class="text-primary fw-bold">[ HEX ];</span>
+                    <span class="text-primary fw-bold">[ HEX ];</span><br>
+                    <span class="text-primary">[ {{ $data->hex_status }} ];</span><br>
                 @endif
             </td>
         </tr>

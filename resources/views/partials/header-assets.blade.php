@@ -32,3 +32,4 @@
 <script src="{{ asset('assets/js/config.js') }}"></script>
 <script defer src="{{ asset('assets/js/alpine-ajax.min.js') }}"></script>
 <script defer src="{{ asset('assets/js/alpine-js.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
