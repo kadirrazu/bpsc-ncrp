@@ -1,6 +1,6 @@
 @if (session('success'))
     <div class="alert alert-success" x-data="{ show : true }"
-        x-init="setTimeout(() => show = false, 6000)"
+        x-init="setTimeout(() => show = false, 4000)"
         x-show="show">
         {{ session('success') }}
     </div>
@@ -8,7 +8,7 @@
 
 @if (session('error'))
     <div class="alert alert-danger" x-data="{ show : true }"
-        x-init="setTimeout(() => show = false, 6000)"
+        x-init="setTimeout(() => show = false, 4000)"
         x-show="show">
         {{ session('error') }}
     </div>
@@ -16,7 +16,7 @@
 
 @if (session('warning'))
     <div class="alert alert-warning" x-data="{ show : true }"
-        x-init="setTimeout(() => show = false, 6000)"
+        x-init="setTimeout(() => show = false, 4000)"
         x-show="show">
         {{ session('warning') }}
     </div>
@@ -24,7 +24,7 @@
 
 @if (session('info'))
     <div class="alert alert-info" x-data="{ show : true }"
-        x-init="setTimeout(() => show = false, 6000)"
+        x-init="setTimeout(() => show = false, 4000)"
         x-show="show">
         {{ session('info') }}
     </div>

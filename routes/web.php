@@ -54,6 +54,8 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/set-exam-as-current/{id}', [ExamManagementController::class, 'setExamAsCurrent']);
 
     Route::get('/config-data-line', [DataProcessingController::class, 'configureRawDataLines']);
+    Route::get('/configure-data-line-etype', [DataProcessingController::class, 'configureETypeRawDataLines']);
+    Route::get('/configure-data-line-htype', [DataProcessingController::class, 'configureHTypeRawDataLines']);
     Route::get('/upload-data-file', [DataProcessingController::class, 'uploadDataFile']);
     Route::post('/upload-data-file', [DataProcessingController::class, 'uploadDataFileProcessor']);
     Route::get('/convert-data-file', [DataProcessingController::class, 'convertDataFile']);
@@ -68,6 +70,13 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/mark-center-issues', [IssueManagementController::class, 'markEtypeCenterCodeIssues']);
     Route::get('/mark-lithocode-issues', [IssueManagementController::class, 'markEtypeLithoCodeIssues']);
     Route::get('/mark-lithocode-issues-htype', [IssueManagementController::class, 'markHTypeLithoCodeIssues']);
+    Route::get('/mark-hexmissmatch-issues-etype', [IssueManagementController::class, 'markETypeHexCodeMissMatchIssues']);
+    Route::get('/mark-hexmissmatch-issues-htype', [IssueManagementController::class, 'markHTypeHexCodeMissMatchIssues']);
+    Route::get('/mark-hexmissmatch-issues-htype', [IssueManagementController::class, 'markHTypeHexCodeMissMatchIssues']);
+    Route::get('/mark-own-hexmissmatch-issues-etype', [IssueManagementController::class, 'markETypeOwnHexCodeMissMatches']);
+    Route::get('/mark-own-hexmissmatch-issues-htype', [IssueManagementController::class, 'markHTypeOwnHexCodeMissMatches']);
+    Route::get('/hexmissmatch-data-etype', [IssueManagementController::class, 'viewETypeHexCodeMissMatches']);
+    Route::get('/hexmissmatch-data-htype', [IssueManagementController::class, 'viewHTypeHexCodeMissMatches']);
 
 
     Route::get('/generate-hexcode', [DataProcessingController::class, 'generateHexcodeView']);

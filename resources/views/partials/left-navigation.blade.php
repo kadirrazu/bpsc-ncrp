@@ -81,11 +81,6 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ url('/matching-hexcode') }}" class="menu-link">
-                    <div>Hex Matching</div>
-                    </a>
-                </li>
-                <li class="menu-item">
                     <a href="{{ url('/upload-regi-file') }}" class="menu-link">
                     <div>Upload Regi File</div>
                     </a>

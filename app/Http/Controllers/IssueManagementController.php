@@ -287,6 +287,284 @@ class IssueManagementController extends Controller
         return redirect()->back()->with('info', strtoupper($issueCount . ' - LITHO CODE issues were marked for E-TYPE DATA.'));
     }
 
+    //HEX CODE MISS MATCH issue finding for e-type data
+    public function markETypeHexCodeMissMatchIssues()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        //Set all hexcode missmatch related issue count to empty first.
+        $setStatusToEmptyFirst = DB::table('etype_data')->where('post_code', $currentExam->post_code)->update([
+            'hex_matched' => 1,
+        ]);
+
+        //Set all hexcode missmatch issue report to empty first.
+        DB::table('issue_generation_report')->where('exam_id', $currentExam->id)->where('issue_type', 'hexmissmatch_issue_etype')->delete();
+
+        $eTypeDataSet = DB::table('etype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+        $hTypeDataSet = DB::table('htype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+
+        $matched = 0;
+        $matchCount = 0;
+        $unMatchCount = 0;
+        $unMatchedIds = [];
+        $matchedIds = [];
+        
+        //Iterate through each rows of the E-TYPE data table.
+        foreach( $eTypeDataSet as $dataRow )
+        {
+
+            $eHex1 = $dataRow->hex_code1 ?? '';
+            $eHex2 = $dataRow->hex_code2 ?? '';
+
+            //Check if the e-type hex_code1 does match with hex_code1 of h-type data
+            if( $hTypeDataSet->contains('hex_code1', $eHex1) )
+            {
+                $matched = 1;
+                $matchCount++;
+                $matchedIds[] = $dataRow->id;
+            }
+            else
+            {
+                $matched = 0;
+                $unMatchCount++;
+                $unMatchedIds[] = $dataRow->id;
+            }
+
+        }
+
+        if( count($unMatchedIds) > 0 )
+        {
+            DB::transaction(function () use ($unMatchedIds) {
+                foreach ($unMatchedIds as $id) {
+                    DB::table('etype_data')->where('id', $id)
+                    ->update([
+                        'hex_matched' => 0,
+                    ]);
+                }
+            });
+        }
+
+        //Update issue generation record timestamp and latest issue count
+        DB::table('issue_generation_report')->insert([
+            'exam_id' => $currentExam->id,
+            'file_type' => 'e_type',
+            'issue_type' => 'hexmissmatch_issue_etype',
+            'run_time' => Carbon::now(),
+            'issue_count' => $unMatchCount
+        ]);
+
+        //Redirect to issue generation page with success status and touched record count.
+        return redirect()->back()->with('info', strtoupper( 'E-TYPE Hex Checking Report: Matched - ' . $matchCount . '; Unmatched - ' . $unMatchCount));
+    }
+
+    //HEX CODE MISS MATCH issue finding for h-type data
+    public function markHTypeHexCodeMissMatchIssues()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        //Set all hexcode missmatch related issue count to empty first.
+        $setStatusToEmptyFirst = DB::table('htype_data')->where('post_code', $currentExam->post_code)->update([
+            'hex_matched' => 1,
+        ]);
+
+        //Set all hexcode missmatch issue report to empty first.
+        DB::table('issue_generation_report')->where('exam_id', $currentExam->id)->where('issue_type', 'hexmissmatch_issue_htype')->delete();
+
+        $eTypeDataSet = DB::table('htype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+        $hTypeDataSet = DB::table('etype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+
+        $matched = 0;
+        $matchCount = 0;
+        $unMatchCount = 0;
+        $unMatchedIds = [];
+        $matchedIds = [];
+        
+        //Iterate through each rows of the E-TYPE data table.
+        foreach( $hTypeDataSet as $dataRow )
+        {
+
+            $hHex1 = $dataRow->hex_code1 ?? '';
+            $hHex2 = $dataRow->hex_code2 ?? '';
+
+            //Check if the e-type hex_code1 does match with hex_code1 of h-type data
+            if( $eTypeDataSet->contains('hex_code1', $hHex1) )
+            {
+                $matched = 1;
+                $matchCount++;
+                $matchedIds[] = $dataRow->id;
+            }
+            else
+            {
+                $matched = 0;
+                $unMatchCount++;
+                $unMatchedIds[] = $dataRow->id;
+            }
+
+        }
+
+        if( count($unMatchedIds) > 0 )
+        {
+            DB::transaction(function () use ($unMatchedIds) {
+                foreach ($unMatchedIds as $id) {
+                    DB::table('htype_data')->where('id', $id)
+                    ->update([
+                        'hex_matched' => 0,
+                    ]);
+                }
+            });
+        }
+
+        //Update issue generation record timestamp and latest issue count
+        DB::table('issue_generation_report')->insert([
+            'exam_id' => $currentExam->id,
+            'file_type' => 'e_type',
+            'issue_type' => 'hexmissmatch_issue_htype',
+            'run_time' => Carbon::now(),
+            'issue_count' => $unMatchCount
+        ]);
+
+        //Redirect to issue generation page with success status and touched record count.
+        return redirect()->back()->with('info', strtoupper( 'H-TYPE Hex Checking Report: Matched - ' . $matchCount . '; Unmatched - ' . $unMatchCount));
+    }
+
+    //HEX CODE MATCH CHECKING WITH OWN DATA - E TYPE
+    public function markETypeOwnHexCodeMissMatches()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        //Set all hexcode missmatch related issue count to empty first.
+        $setStatusToEmptyFirst = DB::table('etype_data')->where('post_code', $currentExam->post_code)->update([
+            'hex_issue' => 0,
+        ]);
+
+        //Set all hexcode missmatch issue report to empty first.
+        DB::table('issue_generation_report')->where('exam_id', $currentExam->id)->where('issue_type', 'own_hexmissmatch_issue_etype')->delete();
+
+        $eTypeDataSet = DB::table('etype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+
+        $matched = 0;
+        $matchCount = 0;
+        $unMatchCount = 0;
+        $matchedIds = [];
+        $unMatchedIds = [];
+        
+        //Iterate through each rows of the E-TYPE data table.
+        foreach( $eTypeDataSet as $dataRow )
+        {
+
+            $hexCode1 = $dataRow->hex_code1 ?? '';
+            $hexCode2 = $dataRow->hex_code2 ?? '';
+
+            //Check if the e-type hex_code1 does match with hex_code1 of h-type data
+            if( $hexCode1 == $hexCode2 )
+            {
+                $matched = 1;
+                $matchCount++;
+                $matchedIds[] = $dataRow->id;
+            }
+            else
+            {
+                $matched = 0;
+                $unMatchCount++;
+                $unMatchedIds[] = $dataRow->id;
+            }
+
+        }
+
+        if( count($unMatchedIds) > 0 )
+        {
+            DB::transaction(function () use ($unMatchedIds) {
+                foreach ($unMatchedIds as $id) {
+                    DB::table('etype_data')->where('id', $id)
+                    ->update([
+                        'hex_issue' => 1,
+                    ]);
+                }
+            });
+        }
+
+        //Update issue generation record timestamp and latest issue count
+        DB::table('issue_generation_report')->insert([
+            'exam_id' => $currentExam->id,
+            'file_type' => 'e_type',
+            'issue_type' => 'own_hexmissmatch_issue_etype',
+            'run_time' => Carbon::now(),
+            'issue_count' => $unMatchCount
+        ]);
+
+        //Redirect to issue generation page with success status and touched record count.
+        return redirect()->back()->with('info', strtoupper( 'E-TYPE Own Hexcode Checking Report: Matched - ' . $matchCount . '; Unmatched - ' . $unMatchCount));
+    }
+
+    //HEX CODE MATCH CHECKING WITH OWN DATA - H TYPE
+    public function markHTypeOwnHexCodeMissMatches()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        //Set all hexcode missmatch related issue count to empty first.
+        $setStatusToEmptyFirst = DB::table('htype_data')->where('post_code', $currentExam->post_code)->update([
+            'hex_issue' => 0,
+        ]);
+
+        //Set all hexcode missmatch issue report to empty first.
+        DB::table('issue_generation_report')->where('exam_id', $currentExam->id)->where('issue_type', 'own_hexmissmatch_issue_htype')->delete();
+
+        $hTypeDataSet = DB::table('htype_data')->select('id', 'hex_code1', 'hex_code2')->where('post_code', $currentExam->post_code)->where('litho_issue', '!==', 1)->get();
+
+        $matched = 0;
+        $matchCount = 0;
+        $unMatchCount = 0;
+        $matchedIds = [];
+        $unMatchedIds = [];
+        
+        //Iterate through each rows of the E-TYPE data table.
+        foreach( $hTypeDataSet as $dataRow )
+        {
+
+            $hexCode1 = $dataRow->hex_code1 ?? '';
+            $hexCode2 = $dataRow->hex_code2 ?? '';
+
+            //Check if the e-type hex_code1 does match with hex_code1 of h-type data
+            if( $hexCode1 == $hexCode2 )
+            {
+                $matched = 1;
+                $matchCount++;
+                $matchedIds[] = $dataRow->id;
+            }
+            else
+            {
+                $matched = 0;
+                $unMatchCount++;
+                $unMatchedIds[] = $dataRow->id;
+            }
+
+        }
+
+        if( count($unMatchedIds) > 0 )
+        {
+            DB::transaction(function () use ($unMatchedIds) {
+                foreach ($unMatchedIds as $id) {
+                    DB::table('htype_data')->where('id', $id)
+                    ->update([
+                        'hex_issue' => 1,
+                    ]);
+                }
+            });
+        }
+
+        //Update issue generation record timestamp and latest issue count
+        DB::table('issue_generation_report')->insert([
+            'exam_id' => $currentExam->id,
+            'file_type' => 'e_type',
+            'issue_type' => 'own_hexmissmatch_issue_htype',
+            'run_time' => Carbon::now(),
+            'issue_count' => $unMatchCount
+        ]);
+
+        //Redirect to issue generation page with success status and touched record count.
+        return redirect()->back()->with('info', strtoupper( 'H-TYPE Own Hexcode Checking Report: Matched - ' . $matchCount . '; Unmatched - ' . $unMatchCount));
+    }
+
     //LITHO CODE issue finding for h-type data
     public function markHTypeLithoCodeIssues()
     {

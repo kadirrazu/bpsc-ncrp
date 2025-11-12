@@ -177,8 +177,80 @@ $fileTypes = [
                                         </tr>
                                     </table>
                                 </div>
+
+                                <div id="mark-own-hexmissmatch-issues-htype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>E-TYPE OWN HEXCODE MISSMATCH CHECKING</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $ownHexMissmatchIssueE = $issueReportTable->where('issue_type', 'own_hexmissmatch_issue_etype')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($ownHexMissmatchIssueE->run_time) && $ownHexMissmatchIssueE->run_time != '' )
+                                                        {{ $ownHexMissmatchIssueE->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('own-hexmissmatch-data-etype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $ownHexMissmatchIssueE->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-own-hexmissmatch-issues-etype') }}">
+                                                    OWN HEXCODE MISSMATCH CHECKING (E-TYPE)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div id="mark-hexmissmatch-issues-etype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>E-TYPE HEXCODE MATCHING (WITH H-TYPE DATA)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $hexMissmatchIssueE = $issueReportTable->where('issue_type', 'hexmissmatch_issue_etype')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($hexMissmatchIssueE->run_time) && $hexMissmatchIssueE->run_time != '' )
+                                                        {{ $hexMissmatchIssueE->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('hexmissmatch-data-etype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $hexMissmatchIssueE->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-hexmissmatch-issues-etype') }}">
+                                                    MARK HEX CODE MISSMATCH ( WITH H-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
+
                                 <div id="mark-lithocode-issues-htype">
                                     <table class="table border table-borderless mb-2">
                                         <tr>
@@ -211,7 +283,79 @@ $fileTypes = [
                                         </tr>
                                     </table>
                                 </div>
+
+                                <div id="mark-own-hexmissmatch-issues-htype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>H-TYPE OWN HEXCODE MISSMATCH CHECKING</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $ownHexMissmatchIssueH = $issueReportTable->where('issue_type', 'own_hexmissmatch_issue_htype')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($ownHexMissmatchIssueH->run_time) && $ownHexMissmatchIssueH->run_time != '' )
+                                                        {{ $ownHexMissmatchIssueH->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('own-hexmissmatch-data-htype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $ownHexMissmatchIssueH->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary my-2" href="{{ url('mark-own-hexmissmatch-issues-htype') }}">
+                                                    OWN HEXCODE MISSMATCH CHECKING (H-TYPE)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div id="mark-hexmissmatch-issues-htype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>H-TYPE HEXCODE MATCHING (WITH E-TYPE DATA)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $hexMissmatchIssueH = $issueReportTable->where('issue_type', 'hexmissmatch_issue_htype')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($hexMissmatchIssueH->run_time) && $hexMissmatchIssueH->run_time != '' )
+                                                        {{ $hexMissmatchIssueH->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('hexmissmatch-data-htype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $hexMissmatchIssueH->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary my-2" href="{{ url('mark-hexmissmatch-issues-htype') }}">
+                                                    MARK HEX CODE MISSMATCH (WITH E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
                             </div>
+
                         </div>
                     </div>
                 </div>

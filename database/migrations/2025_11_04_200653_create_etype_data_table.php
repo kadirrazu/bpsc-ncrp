@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('litho_status')->nullable();
             $table->boolean('hex_issue')->default(0);
             $table->string('hex_status')->nullable();
+            $table->boolean('hex_matched')->default(0);
             $table->string('update_status')->nullable();
             $table->integer('updated_by')->nullable();
             $table->string('general_status')->nullable();

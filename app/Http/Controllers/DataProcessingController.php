@@ -19,6 +19,12 @@ class DataProcessingController extends Controller
         return view('dashboard.preli-processing.configure-data-line');
     }
 
+    public function configureETypeRawDataLines()
+    {
+        $eTypeParts = DB::table('datalines')->where('script_type', 'e_type')->orderBy('part_sequence', 'ASC')->get();
+        return view('dashboard.preli-processing.parts.configure-data-line-view-etype', ['parts' => $eTypeParts]);
+    }
+
     public function uploadDataFile()
     {
         $currentExam = Exam::where('is_current', 1)->first();
@@ -126,6 +132,8 @@ class DataProcessingController extends Controller
 
         $eTypeDataByPostCode = DB::table('etype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
 
+        $hexArray = [];
+
         foreach( $eTypeDataByPostCode as $row )
         {
             $hexcode1 = '';
@@ -147,13 +155,24 @@ class DataProcessingController extends Controller
                 continue;
             }
 
-            $updated = DB::table('etype_data')->where('id', $row->id)->update([
-                'hex_code1' => strtoupper($hexcode1),
-                'hex_code2' => strtoupper($hexcode2)
-            ]);
+            $hexArray[] = [
+                'id' => $row->id,
+                'hex_code1' => $hexcode1,
+                'hex_code2' => $hexcode2,
+            ];
         }
 
-        return redirect()->back()->with('success', 'All E-TYPE LithoCodes were converted to HexCodes successfully.');
+        DB::transaction(function () use ($hexArray) {
+            foreach ($hexArray as $data) {
+                DB::table('etype_data')->where('id', $data['id'])
+                ->update([
+                    'hex_code1' => strtoupper($data['hex_code1']),
+                    'hex_code2' => strtoupper($data['hex_code2'])
+                ]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'All E-TYPE LITHO CODE were successfully converted to HEX CODE.');
 
     }
 
@@ -162,6 +181,8 @@ class DataProcessingController extends Controller
         $postCode = $request->postcode;
 
         $hTypeDataByPostCode = DB::table('htype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
+
+        $hexArray = [];
 
         foreach( $hTypeDataByPostCode as $row )
         {
@@ -178,13 +199,25 @@ class DataProcessingController extends Controller
                 $hexcode2 = $this->convertLithoCodeToHexCode($row->litho_code2);
             }
 
-            $updated = DB::table('htype_data')->where('id', $row->id)->update([
-                'hex_code1' => strtoupper($hexcode1),
-                'hex_code2' => strtoupper($hexcode2)
-            ]);
+            $hexArray[] = [
+                'id' => $row->id,
+                'hex_code1' => $hexcode1,
+                'hex_code2' => $hexcode2,
+            ];
+
         }
 
-        return redirect()->back()->with('success', 'All H-TYPE LithoCodes were converted to HexCodes successfully.');
+        DB::transaction(function () use ($hexArray) {
+            foreach ($hexArray as $data) {
+                DB::table('htype_data')->where('id', $data['id'])
+                ->update([
+                    'hex_code1' => strtoupper($data['hex_code1']),
+                    'hex_code2' => strtoupper($data['hex_code2'])
+                ]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'All H-TYPE LITHO CODE were successfully converted to HEX CODE.');
 
     }
 
@@ -328,7 +361,7 @@ class DataProcessingController extends Controller
             'center' => $centerCode,
             'reg_number' => $regNumber,
             'set_code' => $setCode,
-            'general_status' => 'CHANGED',
+            'update_status' => 'UPDATED',
             'solve_status' => '1',
             'updated_by' => Auth::id(),
             'updated_at' => Carbon::now()
@@ -364,7 +397,7 @@ class DataProcessingController extends Controller
             'bnd_number' => $bndNumber,
             'litho_code1' => $lithoCode1,
             'litho_code2' => $lithoCode2,
-            'general_status' => 'CHANGED',
+            'update_status' => 'CHANGED',
             'solve_status' => '1',
             'updated_by' => Auth::id(),
             'updated_at' => Carbon::now()

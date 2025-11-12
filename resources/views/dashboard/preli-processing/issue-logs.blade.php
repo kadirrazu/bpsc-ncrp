@@ -152,7 +152,7 @@ $fileTypes = [
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Hexcode Issue</td>
+                                        <td>Own Hexcode Missmatch Issue</td>
                                         <td class="text-center">
                                             @php $hexIssueE = $issueReportTable->where('issue_type', 'hexcode_issue')->first(); @endphp
                                                     
@@ -207,7 +207,7 @@ $fileTypes = [
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Hexcode Issue</td>
+                                        <td>Own Hexcode Missmatch Issue</td>
                                         <td class="text-center">
                                             @php $hexIssueH = $issueReportTable->where('issue_type', 'hexcode_issue_htype')->first(); @endphp
                                                     
@@ -240,17 +240,53 @@ $fileTypes = [
                                 <h4><span class="text-danger">Hexcode Missmatch</span> ISSUES [Combined Upper and Lower Part] -</h4>
                                 <table class="table table-bordered">
                                     <tr>
-                                        <td>E-Type Hexcode Missmatch</td>
-                                        <td class="text-center">-</td>
+                                        <td>E-Type Hexcode Missmatch [with counter part data]</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $hexMissMatchIssueE = $issueReportTable->where('issue_type', 'hexmissmatch_issue_etype')->first(); @endphp
+                                                    
+                                            @if( isset($hexMissMatchIssueE->issue_count) && $hexMissMatchIssueE->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $hexMissMatchIssueE->issue_count }}
+                                                </span>
+                                            @elseif( !isset($hexMissMatchIssueE->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $hexMissMatchIssueE->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                             @if( isset($hexMissMatchIssueE->issue_count) && $hexMissMatchIssueE->issue_count > 0 )
+                                                <a href="{{ url('hexmissmatch-data-etype') }}" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($hexMissMatchIssueE->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>H-Type Hexcode Missmatch</td>
-                                        <td class="text-center">-</td>
+                                        <td>H-Type Hexcode Missmatch [with counter part data]</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                            @php $hexMissMatchIssueH = $issueReportTable->where('issue_type', 'hexmissmatch_issue_htype')->first(); @endphp
+                                                    
+                                            @if( isset($hexMissMatchIssueH->issue_count) && $hexMissMatchIssueH->issue_count > 0 )
+                                                <span class="text-danger">
+                                                    {{ $hexMissMatchIssueH->issue_count }}
+                                                </span>
+                                            @elseif( !isset($hexMissMatchIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="text-success">{{ $hexMissMatchIssueH->issue_count ?? 0 }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                             @if( isset($hexMissMatchIssueH->issue_count) && $hexMissMatchIssueH->issue_count > 0 )
+                                                <a href="{{ url('hexmissmatch-data-htype') }}" class="btn btn-primary btn-sm">View List</a>
+                                            @elseif( !isset($hexMissMatchIssueH->issue_count) )
+                                                <span class="text-warning">N/A</span>
+                                            @else
+                                                <span class="icon-base bx bx-check-circle text-success"></span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </table>

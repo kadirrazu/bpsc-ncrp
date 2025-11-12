@@ -4,8 +4,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="" class="btn btn-primary">E-Type (Upper Part)</a>
-            <a href="" class="btn btn-secondary">H-Type (Lower Part)</a>
+            <a href="{{ url('configure-data-line-etype') }}" class="btn btn-primary">E-Type (Upper Part)</a>
+            <a href="{{ url('configure-data-line-htype') }}" class="btn btn-secondary">H-Type (Lower Part)</a>
         </div>
     </div>
 
