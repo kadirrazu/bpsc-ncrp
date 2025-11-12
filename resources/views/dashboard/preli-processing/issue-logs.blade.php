@@ -68,7 +68,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($regIssue->issue_count) && $regIssue->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data/reg_number_issue/e_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($regIssue->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else
@@ -93,7 +93,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($setIssue->issue_count) && $setIssue->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data/set_code_issue/e_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($setIssue->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else
@@ -118,7 +118,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($centerIssue->issue_count) && $centerIssue->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data/center_issue/e_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($centerIssue->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else
@@ -143,7 +143,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($lithoIssue->issue_count) && $lithoIssue->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data/litho_issue/e_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($lithoIssue->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else
@@ -168,7 +168,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($hexIssueE->issue_count) && $hexIssueE->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data/hex_issue/e_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($hexIssueE->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else
@@ -198,7 +198,7 @@ $fileTypes = [
                                         </td>
                                         <td class="text-center">
                                             @if( isset($lithoIssueH->issue_count) && $lithoIssueH->issue_count > 0 )
-                                                <a href="#" class="btn btn-primary btn-sm">View List</a>
+                                                <a href="{{ url('solve-data-h/litho_issue/h_type') }}" class="btn btn-primary btn-sm">View List</a>
                                             @elseif( !isset($lithoIssueH->issue_count) )
                                                 <span class="text-warning">N/A</span>
                                             @else

@@ -43,6 +43,7 @@ return new class extends Migration
             $table->string('update_status')->nullable();
             $table->integer('updated_by')->nullable();
             $table->string('general_status')->nullable();
+            $table->string('solve_status')->nullable();
             $table->timestamps();
             $table->index(['reg_number_issue', 'set_code_issue', 'litho_issue']);
         });

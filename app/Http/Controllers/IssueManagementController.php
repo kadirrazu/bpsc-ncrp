@@ -223,7 +223,7 @@ class IssueManagementController extends Controller
         ]);
 
         //Redirect to issue generation page with success status and touched record count.
-        return redirect()->back()->with('info', strtoupper($issueCount . ' - SET CODE issues were marked successfully for E-TYPE DATA.'));
+        return redirect()->back()->with('info', strtoupper($issueCount . ' - CENTER CODE issues were marked successfully for E-TYPE DATA.'));
     }
 
     //LITHO CODE issue finding for e-type data

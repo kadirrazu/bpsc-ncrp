@@ -64,7 +64,7 @@ $fileTypes = [
                                                     @if( isset($regIssue->run_time) && $regIssue->run_time != '' )
                                                         {{ $regIssue->run_time }},
                                                         <span class="text-secondary">
-                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $regIssue->issue_count }}</a>
+                                                            Count: <a href="{{ url('solve-data/reg_number_issue/e_type') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $regIssue->issue_count }}</a>
                                                         </span>
                                                     @else
                                                         <span class="text-danger">Never</span>
@@ -96,7 +96,7 @@ $fileTypes = [
                                                     @if( isset($setIssue->run_time) && $setIssue->run_time != '' )
                                                         {{ $setIssue->run_time }},
                                                         <span class="text-secondary">
-                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $setIssue->issue_count }}</a>
+                                                            Count: <a href="{{ url('solve-data/set_code_issue/e_type') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $setIssue->issue_count }}</a>
                                                         </span>
                                                     @else
                                                         <span class="text-danger">Never</span>
@@ -128,7 +128,7 @@ $fileTypes = [
                                                     @if( isset($centerIssue->run_time) && $centerIssue->run_time != '' )
                                                         {{ $centerIssue->run_time }},
                                                         <span class="text-secondary">
-                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $centerIssue->issue_count }}</a>
+                                                            Count: <a href="{{ url('solve-data/center_issue/e_type') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $centerIssue->issue_count }}</a>
                                                         </span>
                                                     @else
                                                         <span class="text-danger">Never</span>
@@ -160,7 +160,7 @@ $fileTypes = [
                                                     @if( isset($lithoIssue->run_time) && $lithoIssue->run_time != '' )
                                                         {{ $lithoIssue->run_time }},
                                                         <span class="text-secondary">
-                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssue->issue_count }}</a>
+                                                            Count: <a href="{{ url('solve-data/litho_issue/e_type') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssue->issue_count }}</a>
                                                         </span>
                                                     @else
                                                         <span class="text-danger">Never</span>
@@ -194,7 +194,7 @@ $fileTypes = [
                                                     @if( isset($lithoIssueH->run_time) && $lithoIssueH->run_time != '' )
                                                         {{ $lithoIssueH->run_time }},
                                                         <span class="text-secondary">
-                                                            Count: <a href="#" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssueH->issue_count }}</a>
+                                                            Count: <a href="{{ url('solve-data-h/litho_issue/h_type') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $lithoIssueH->issue_count }}</a>
                                                         </span>
                                                     @else
                                                         <span class="text-danger">Never</span>

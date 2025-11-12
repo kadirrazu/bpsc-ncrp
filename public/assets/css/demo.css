@@ -176,3 +176,8 @@
   min-width: 300px;
 }
 
+.data-solved{
+  color: green !important;
+  text-decoration: line-through !important;
+}
+

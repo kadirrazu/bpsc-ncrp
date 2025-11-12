@@ -74,9 +74,11 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/generate-etype-hexcodes/{postcode}', [DataProcessingController::class, 'generateETypeHexcode']);
     Route::get('/generate-htype-hexcodes/{postcode}', [DataProcessingController::class, 'generateHTypeHexcode']);
     Route::get('/solve-data/{issue_type?}/{file_type?}', [DataProcessingController::class, 'solveDataView']);
+    Route::get('/solve-data-h/{issue_type?}/{file_type?}', [DataProcessingController::class, 'solveDataViewH']);
     Route::get('/view-issue-data/{id}/{file_type}', [DataProcessingController::class, 'issueDataView']);
     Route::get('/edit-issue-data/{id}/{file_type}', [DataProcessingController::class, 'editIssueDataView']);
     Route::post('/edit-data-processing', [DataProcessingController::class, 'editDataProcessing']);
+    Route::post('/edit-data-processing-h', [DataProcessingController::class, 'editDataProcessingH']);
 
 });
 

@@ -36,8 +36,9 @@ return new class extends Migration
             $table->string('update_status')->nullable();
             $table->integer('updated_by')->nullable();
             $table->string('general_status')->nullable();
+            $table->string('solve_status')->nullable();
             $table->timestamps();
-            $table->index(['bnd_number', 'litho_issue', 'hex_issue']);
+            $table->index(['bnd_number', 'litho_issue', 'hex_issue', 'final_mark']);
         });
     }
 

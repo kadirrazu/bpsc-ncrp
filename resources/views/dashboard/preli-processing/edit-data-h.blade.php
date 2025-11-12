@@ -52,39 +52,6 @@
 
         <div class="row mb-4">
             <div class="col-md-4 col-form-label">
-                Center Code
-            </div>
-            <div class="col-md-8">
-                <div class="input-group input-group-merge">
-                    <input type="text" class="form-control" name="center" value="{{ $data->center }}">
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col-md-4 col-form-label">
-                Reg Number
-            </div>
-            <div class="col-md-8">
-                <div class="input-group input-group-merge">
-                    <input type="text" class="form-control" name="reg_number" value="{{ $data->reg_number }}">
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col-md-4 col-form-label">
-                Set Code
-            </div>
-            <div class="col-md-8">
-                <div class="input-group input-group-merge">
-                    <input type="text" class="form-control" name="set_code" value="{{ $data->set_code }}">
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col-md-4 col-form-label">
                 Geneal Status
             </div>
             <div class="col-md-8">
@@ -100,25 +67,15 @@
             </div>
             <div class="col-md-8">
                 <div class="input-group input-group-merge">
-                    @if(isset($data->center_issue) && $data->center_issue === 1)
-                        <span class="text-primary fw-bold">[ CENTER ];</span>
-                    @endif
-
-                    @if(isset($data->reg_number_issue) && $data->reg_number_issue === 1)
-                        <span class="text-warning fw-bold">[ REG ];</span>
-                    @endif
-
-                    @if(isset($data->set_code_issue) && $data->set_code_issue === 1)
-                        <span class="text-info fw-bold">[ SET ];</span>
-                    @endif
 
                     @if(isset($data->litho_issue) && $data->litho_issue === 1)
-                        <span class="text-danger fw-bold">[ LITHO ];</span>
+                        <span class="text-danger fw-bold">[ LITHO-H ];</span>
                     @endif
 
                     @if(isset($data->hex_issue) && $data->hex_issue === 1)
-                        <span class="text-primary fw-bold">[ HEX ];</span>
+                        <span class="text-primary fw-bold">[ HEX-H ];</span>
                     @endif
+
                 </div>
             </div>
         </div>

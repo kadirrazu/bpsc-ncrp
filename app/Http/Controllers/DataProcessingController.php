@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Exam;
 use App\Models\Datafile;
 
@@ -197,12 +198,50 @@ class DataProcessingController extends Controller
             $tableName = 'htype_data';
         }
 
-        $eTypeData = DB::table($tableName)->where('center_issue', 1)->orWhere('reg_number_issue', 1)->orWhere('set_code_issue', 1)->orWhere('litho_issue', 1)->orWhere('hex_issue', 1)->get();
+        $query = DB::table($tableName);
+
+        if( $issueType == 'center_issue' ){
+           $query->where('center_issue', 1);
+        }
+        else if( $issueType == 'set_code_issue' ){
+            $query->where('set_code_issue', 1);
+        }
+        else if( $issueType == 'reg_number_issue' ){
+            $query->where('reg_number_issue', 1);
+        }
+        else if( $issueType == 'litho_issue' ){
+            $query->where('litho_issue', 1);
+        }
+        else if( $issueType == 'hex_issue' ){
+            $query->where('hex_issue', 1);
+        }
+        else{
+            $query->where('center_issue', 1)->orWhere('reg_number_issue', 1)->orWhere('set_code_issue', 1)->orWhere('litho_issue', 1)->orWhere('hex_issue', 1);
+        }
+
+        $returnedData = $query->get();
 
         $currentExam = Exam::where('is_current', 1)->first();
 
         return view('dashboard.preli-processing.solve-data', [
-            'data' => $eTypeData,
+            'data' => $returnedData,
+            'exam' => $currentExam,
+        ]);
+
+    }
+
+    public function solveDataViewH(Request $request)
+    {
+        $fileType = $request->file_type ?? 'h_type';
+        $issueType = $request->issue_type ?? 'all';
+        $tableName = 'htype_data';
+
+        $returnedData = DB::table($tableName)->where('litho_issue', 1)->orWhere('hex_issue', 1)->get();
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.preli-processing.solve-data-h', [
+            'data' => $returnedData,
             'exam' => $currentExam,
         ]);
 
@@ -222,10 +261,18 @@ class DataProcessingController extends Controller
 
         $currentExam = Exam::where('is_current', 1)->first();
 
-        return view('dashboard.preli-processing.view-data', [
-            'data' => $data,
-            'exam' => $currentExam,
-        ]);
+        if($fileType == 'h_type'){
+            return view('dashboard.preli-processing.view-data-h', [
+                'data' => $data,
+                'exam' => $currentExam,
+            ]);
+        }
+        else{
+            return view('dashboard.preli-processing.view-data', [
+                'data' => $data,
+                'exam' => $currentExam,
+            ]);
+        }
     }
 
     public function editIssueDataView(Request $request)
@@ -242,28 +289,98 @@ class DataProcessingController extends Controller
 
         $currentExam = Exam::where('is_current', 1)->first();
 
-        return view('dashboard.preli-processing.edit-data', [
-            'data' => $data,
-            'exam' => $currentExam,
-            'file_type' => $fileType,
-        ]);
+        if($fileType == 'h_type'){
+            return view('dashboard.preli-processing.edit-data-h', [
+                'data' => $data,
+                'exam' => $currentExam,
+                'file_type' => $fileType,
+            ]);
+        }
+        else{
+             return view('dashboard.preli-processing.edit-data', [
+                'data' => $data,
+                'exam' => $currentExam,
+                'file_type' => $fileType,
+            ]);
+        }
     }
 
     public function editDataProcessing(Request $request)
     {
-        // Validate the incoming data
-        /*$request->validate([
-            'data_id' => 'required|integer',
-            'data_type' => 'required|string',
-            'bnd_number' => 'required|string',
-            'scan_sr' => 'required|integer',
-            'litho_code1' => 'required|string',
-            'litho_code2' => 'required|string',
-        ]);*/
+        $receivedData = json_decode( $request->input('allFormData') );
 
-        // Return a JSON response
-        $data = $request->all();
-        return $data;
+        $dataId = $receivedData->data_id;
+        $dataType = $receivedData->data_type;
+        $bndNumber = $receivedData->bnd_number;
+        $scanSr = $receivedData->scan_sr;
+        $lithoCode1 = $receivedData->litho_code1;
+        $lithoCode2 = $receivedData->litho_code2;
+        $centerCode = $receivedData->center ?? '';
+        $regNumber = $receivedData->reg_number ?? '';
+        $setCode = $receivedData->set_code ?? '';
+
+        $tableName = 'etype_data';
+
+        $result = DB::table($tableName)->where('id', $dataId)->update([
+            'bnd_number' => $bndNumber,
+            'litho_code1' => $lithoCode1,
+            'litho_code2' => $lithoCode2,
+            'center' => $centerCode,
+            'reg_number' => $regNumber,
+            'set_code' => $setCode,
+            'general_status' => 'CHANGED',
+            'solve_status' => '1',
+            'updated_by' => Auth::id(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $status = [];
+
+        if($result){
+            $status['status'] = 'success';
+        }
+        else{
+            $status['status'] = 'error';
+        }
+
+        return $status;
+
+    }
+
+    public function editDataProcessingH(Request $request)
+    {
+        $receivedData = json_decode( $request->input('allFormData') );
+
+        $dataId = $receivedData->data_id;
+        $dataType = $receivedData->data_type;
+        $bndNumber = $receivedData->bnd_number;
+        $scanSr = $receivedData->scan_sr;
+        $lithoCode1 = $receivedData->litho_code1;
+        $lithoCode2 = $receivedData->litho_code2;
+
+        $tableName = 'htype_data';
+
+        $result = DB::table($tableName)->where('id', $dataId)->update([
+            'bnd_number' => $bndNumber,
+            'litho_code1' => $lithoCode1,
+            'litho_code2' => $lithoCode2,
+            'general_status' => 'CHANGED',
+            'solve_status' => '1',
+            'updated_by' => Auth::id(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $status = [];
+
+        if($result){
+            $status['status'] = 'success';
+        }
+        else{
+            $status['status'] = 'error';
+        }
+
+        return $status;
+
     }
 
     private function convertLithoCodeToHexCode( $lithoCode )

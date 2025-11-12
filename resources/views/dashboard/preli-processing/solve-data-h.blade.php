@@ -3,7 +3,7 @@
 <x-layout-dashboard>
 
     <h4 class="fw-bold pt-3">
-        <span class="text-muted fw-light">Data Solving / </span>E-TYPE
+        <span class="text-muted fw-light">Data Solving / </span>H-TYPE
     </h4>
 
     <hr>
@@ -31,8 +31,6 @@
                             <th class="text-center">Bundle</th>
                             <th>Scan Sr.</th>
                             <th>Litho Code</th>
-                            <th>Reg</th>
-                            <th class="text-center">Set Code</th>
                             <th class="text-center">Issue Flags</th>
                             <th class="text-center">Solve Status</th>
                             <th>Action Buttons</th>
@@ -45,27 +43,13 @@
                             <td class="text-center">{{ $row->bnd_number }}</td>
                             <td>{{ $row->scan_sr }}</td>
                             <td>{{ $row->litho_code1 }}</td>
-                            <td>{{ $row->reg_number }}</td>
-                            <td class="text-center">{{ $row->set_code }}</td>
                             <td class="text-center">
-                                @if(isset($row->center_issue) && $row->center_issue === 1)
-                                    <span class="text-primary">[ CENTER ];</span>
-                                @endif
-
-                                @if(isset($row->reg_number_issue) && $row->reg_number_issue === 1)
-                                    <span class="text-warning">[ REG ];</span>
-                                @endif
-
-                                @if(isset($row->set_code_issue) && $row->set_code_issue === 1)
-                                    <span class="text-info">[ SET ];</span>
-                                @endif
-
                                 @if(isset($row->litho_issue) && $row->litho_issue === 1)
-                                    <span class="text-danger">[ LITHO ];</span>
+                                    <span class="text-danger">[ LITHO-H ];</span>
                                 @endif
 
                                 @if(isset($row->hex_issue) && $row->hex_issue === 1)
-                                    <span class="text-primary">[ HEX ];</span>
+                                    <span class="text-primary">[ HEX-H ];</span>
                                 @endif
                             </td>
                             <td class="text-center">
@@ -76,7 +60,7 @@
                                 @endif
                             </td>
                             <td>
-                                <x-model-solve-buttons model="e_type" id="{{ $row->id }}"/>
+                                <x-model-solve-buttons-h model="h_type" id="{{ $row->id }}"/>
                             </td>
                         </tr>
                         @endforeach
@@ -122,7 +106,7 @@
                 });
 
                 $.ajax({
-                    url: "{{ url('edit-data-processing') }}",
+                    url: "{{ url('edit-data-processing-h') }}",
                     type: "POST",
                     data: {
                         allFormData: JSON.stringify(formFields)
