@@ -11,6 +11,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ExamManagementController;
 use App\Http\Controllers\DataProcessingController;
 use App\Http\Controllers\IssueManagementController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
 
@@ -100,6 +101,8 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/upload-answer-file', [DataProcessingController::class, 'uploadAnsweKeyFileProcessor']);
     Route::get('/convert-answer-file', [DataProcessingController::class, 'convertAnswerFile']);
     Route::get('/calculate-marks', [DataProcessingController::class, 'calculateMarks']);
+
+    Route::get('/hexcode-unmatch-report', [ReportController::class, 'hexcodeUnmatchReport']);
 
 });
 

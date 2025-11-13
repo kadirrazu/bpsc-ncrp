@@ -125,8 +125,8 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('/eh-error-report') }}" class="menu-link">
-                <div>E/H Error Report</div>
+                <a href="{{ url('/hexcode-unmatch-report') }}" class="menu-link">
+                <div>Hexcode Unmatch Report</div>
                 </a>
             </li>
             <li class="menu-item">

@@ -62,6 +62,8 @@ class IssueManagementController extends Controller
         $configRegNumber = DB::table('datalines')->where('script_type', 'e_type')->where('part_title', 'reg_number')->first();
         $regNumberLength = $configRegNumber->length ?? 0;
 
+        $regIssueArray = [];
+
         //Iterate through each rows of the E-TYPE data table.
         foreach( $eTypeDataSet as $dataRow )
         {
