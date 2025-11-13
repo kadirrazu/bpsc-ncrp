@@ -53,7 +53,7 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/delete-exam/{id}', [ExamManagementController::class, 'deleteExamCommit']);
     Route::get('/set-exam-as-current/{id}', [ExamManagementController::class, 'setExamAsCurrent']);
 
-    Route::get('/config-data-line', [DataProcessingController::class, 'configureRawDataLines']);
+    Route::get('/config-data-line', [DataProcessingController::class, 'configureETypeRawDataLines']);
     Route::get('/configure-data-line-etype', [DataProcessingController::class, 'configureETypeRawDataLines']);
     Route::get('/configure-data-line-htype', [DataProcessingController::class, 'configureHTypeRawDataLines']);
     Route::post('/update-data-line-etype', [DataProcessingController::class, 'updateETypeRawDataLine']);
@@ -95,6 +95,11 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/upload-regi-file', [DataProcessingController::class, 'uploadRegiFileView']);
     Route::post('/upload-regi-file', [DataProcessingController::class, 'uploadRegiFileProcessor']);
     Route::get('/convert-regi-file', [DataProcessingController::class, 'convertRegiFile']);
+
+    Route::get('/upload-answer-file', [DataProcessingController::class, 'uploadAnswerFileView']);
+    Route::post('/upload-answer-file', [DataProcessingController::class, 'uploadAnsweKeyFileProcessor']);
+    Route::get('/convert-answer-file', [DataProcessingController::class, 'convertAnswerFile']);
+    Route::get('/calculate-marks', [DataProcessingController::class, 'calculateMarks']);
 
 });
 

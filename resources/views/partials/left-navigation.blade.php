@@ -95,13 +95,8 @@
             </a>
             <ul class="menu-sub">
             <li class="menu-item">
-                <a href="{{ url('/answer-key-posting') }}" class="menu-link">
+                <a href="{{ url('/upload-answer-file') }}" class="menu-link">
                 <div>Answer Key Posting</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/calculate-mark') }}" class="menu-link">
-                <div>Mark Calculation</div>
                 </a>
             </li>
             <li class="menu-item">

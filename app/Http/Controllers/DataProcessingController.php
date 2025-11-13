@@ -10,6 +10,8 @@ use App\Models\Exam;
 use App\Models\Datafile;
 use App\Models\Regifile;
 use App\Models\Candidate;
+use App\Models\Answer;
+use App\Models\Answerfile;
 
 use Carbon\Carbon;
 
@@ -795,6 +797,179 @@ class DataProcessingController extends Controller
         }
 
         return redirect()->back()->with('success', 'CSV files data were converted and placed to database table successfully.');
+    }
+
+    public function uploadAnswerFileView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+        $answerFile = Answerfile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->first();
+
+        return view('dashboard.preli-processing.upload-answer-file', [
+            'exam' => $currentExam,
+            'answerFile' => $answerFile,
+        ]);
+    }
+
+    public function uploadAnsweKeyFileProcessor(Request $request)
+    {
+        $validated = $request->validate([
+            'exam-id' => 'required',
+            'post-code' => 'required',
+            'file-type' => 'required',
+            'answerfile' => 'required|file',
+            'answerfile.*' => 'extensions:txt',
+        ]);
+
+        $examInfo = [
+            'exam_id' => $request->input('exam-id'),
+            'post_code' => $request->input('post-code'),
+            'file_type' => $request->input('file-type'),
+        ];
+
+        if ($request->hasFile('answerfile')) {
+
+            $filename = $request->input('exam-id') . '_' . $request->input('post-code') . '_' . $request->file('answerfile')->getClientOriginalName();
+            
+            $request->file('answerfile')->storeAs( 'datafiles/' . $request->input('post-code') . '/' . strtoupper($request->input('file-type')), $filename, 'public' );
+
+            $inserted = Answerfile::create([
+                'exam_id' => $examInfo['exam_id'],
+                'post_code' => $examInfo['post_code'],
+                'file_type' => $examInfo['file_type'],
+                'file_name' => $filename,
+            ]);
+
+            return redirect()->back()->with('success', 'Answer Key file was uploaded successfully!');
+
+        }
+
+        return redirect()->back()->with('error', 'No file was uploaded! Check for issues and try again.');
+
+    }
+
+    public function convertAnswerFile()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+        $answerFile = Answerfile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->first();
+
+        $post_code = $answerFile->post_code;
+        $file_type = $answerFile->file_type;
+        $file_name = $answerFile->file_name;
+
+        $contents = '';
+        $data = [];
+
+        if( Storage::disk('public')->exists('datafiles/'.$post_code.'/'.strtoupper($file_type).'/'.$file_name) ) 
+        {
+            $contents = Storage::disk('public')->get('datafiles/'.$post_code.'/'.strtoupper($file_type).'/'.$file_name);
+        }
+        else{
+            return redirect()->back()->with('error', '404 - File not found.');
+        }
+
+        if( $contents != null )
+        {
+            $lines = explode("\n", $contents);
+
+            foreach ($lines as $line) 
+            {
+                $start = 0;
+                $setCode = null;
+                $answers = null;
+                
+                if(trim($line) != "" && trim($line) != null)
+                {
+                    $setCode = trim($line[0]);
+                    $answers = str_replace( array("\n", "\r"), '', trim( substr($line, 1) ) );
+                    
+                    $data[] = [
+                        'exam_id' => $currentExam->id,
+                        'post_code' => $currentExam->id,
+                        'set_code' => $setCode,
+                        'answers' => $answers,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            }
+        }
+
+        DB::table('answers')->truncate();
+
+        $result = Answer::insert($data);
+
+        if($result){
+            Answerfile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->update([
+                'conversion_status' => 1
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Answer Key File data were converted and placed to database table successfully.');
+    }
+
+    public function calculateMarks()
+    {
+
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        //$htypeData = DB::table('htype_data')->select('id', 'answers')->where('post_code', $currentExam->post_code)->get();
+
+        $joinedTable = DB::table('etype_data')
+        ->join('htype_data', 'etype_data.hex_code1', '=', 'htype_data.hex_code1')
+        ->select('etype_data.reg_number', 'etype_data.set_code', 'htype_data.id', 'htype_data.post_code', 'htype_data.answers')
+        ->get();
+
+        dd( $joinedTable );
+
+        // Define mark rules
+        /*$markPerCorrect = 1;
+        $markPerWrong = -0.25;
+
+        DB::transaction(function () use ($correctKey, $markPerCorrect, $markPerWrong) {
+
+            
+
+            $updates = [];
+
+            foreach ($htypeData as $row) 
+            {
+                $answers = $row->answers ?? '';
+                $score = 0;
+                $length = strlen($correctKey);
+
+                // Compare each character efficiently
+                for ($i = 0; $i < $length; $i++) {
+                    $given = $answers[$i] ?? ' ';
+                    $correct = $correctKey[$i];
+
+                    if ($given === ' ' || $given === '') continue; // Unanswered
+                    if ($given === $correct) {
+                        $score += $markPerCorrect;
+                    } else {
+                        $score += $markPerWrong;
+                    }
+                }
+
+                $updates[] = [
+                    'id' => $row->id,
+                    'mark' => $score
+                ];
+            }
+
+        });*/
+        
+    }
+
+    private function calculateIndividualMark(string $answers, string $key, float $correct = 1, float $wrong = -0.5)
+    {
+        $score = 0;
+        $len = strlen($key);
+        for ($i = 0; $i < $len; $i++) {
+            $given = $answers[$i] ?? ' ';
+            if ($given === ' ' || $given === '') continue;
+            $score += ($given === $key[$i]) ? $correct : $wrong;
+        }
+        return $score;
     }
 
 }

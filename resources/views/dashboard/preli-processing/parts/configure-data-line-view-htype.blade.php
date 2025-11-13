@@ -10,7 +10,14 @@
 
     <div class="data-reorder-container">
 
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">H-Type Dataline Parts / </span>Reorder || Add Rows</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">H-Type Dataline Parts / </span>Reorder || Add Rows</h4>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{{ url('configure-data-line-etype') }}" class="btn btn-primary">E-TYPE CONFIG [Upper Part]</a>
+            </div>
+        </div>
 
         <form method="POST" method="POST" action="{{ url('update-data-line-htype') }}">
 
