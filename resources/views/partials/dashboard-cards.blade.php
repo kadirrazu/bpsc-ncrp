@@ -1,243 +1,65 @@
 <div class="row">
-    <div class="col-lg-8 mb-4 order-0">
+    <div class="col-lg-12 mb-4 order-0">
         <div class="card">
-        <div class="d-flex align-items-end row">
-            <div class="col-sm-7">
-            <div class="card-body">
-                <h5 class="card-title text-primary">BPSC Result Processing Platform 🎉</h5>
-                <p class="mb-4">
-                Using this platform you can process BPSC exam data. Data import, solving, matching, posting and reporting are available in this platform to perform confidently.
-                </p>
+            <div class="d-flex align-items-end row">
+                <div class="col-sm-7">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">BPSC Result Processing Platform 🎉</h5>
+                    <p class="mb-4">
+                    Using this platform you can process BPSC exam data. Data import, solving, matching, posting and reporting are available in this platform to perform confidently.
+                    </p>
 
-                <a href="javascript:;" class="btn btn-sm btn-outline-primary">Exam List</a>
-            </div>
-            </div>
-            <div class="col-sm-5 text-center text-sm-left">
-            <div class="card-body pb-0 px-0 px-md-4">
-                <img
-                src="{{ asset('assets/img/illustrations/man-with-laptop-light.png') }}"
-                height="140"
-                alt="View Badge User"
-                data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                data-app-light-img="illustrations/man-with-laptop-light.png"
-                />
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 order-1">
-        <div class="row">
-        <div class="col-lg-6 col-md-12 col-6 mb-4">
-            <div class="card">
-            <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
+                    <a href="{{ url('list-exam') }}" class="btn btn-sm btn-outline-primary">Exam List</a>
+                </div>
+                </div>
+                <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
                     <img
-                    src="{{ asset('assets/img/icons/unicons/chart-success.png') }}"
-                    alt="chart success"
-                    class="rounded"
+                    src="{{ asset('assets/img/illustrations/man-with-laptop-light.png') }}"
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
                     />
                 </div>
-                <div class="dropdown">
-                    <button
-                    class="btn p-0"
-                    type="button"
-                    id="cardOpt3"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
                 </div>
-                </div>
-                <span class="fw-semibold d-block mb-1">Exam Count</span>
-                <h3 class="card-title mb-2">5</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>In this month - 2</small>
-            </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-12 col-6 mb-4">
-            <div class="card">
-            <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                    <img
-                    src="{{ asset('assets/img/icons/unicons/wallet-info.png') }}"
-                    alt="Credit Card"
-                    class="rounded"
-                    />
-                </div>
-                <div class="dropdown">
-                    <button
-                    class="btn p-0"
-                    type="button"
-                    id="cardOpt6"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
-                </div>
-                </div>
-                <span>Result Finalized</span>
-                <h3 class="card-title text-nowrap mb-1">4</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Result Due - 0</small>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- Total Revenue -->
-    <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-        <div class="card">
-        <div class="row row-bordered g-0">
-            <div class="col-md-8">
-            <h5 class="card-header m-0 me-2 pb-3">Monthwise Exam Comparisons</h5>
-            <div id="totalRevenueChart" class="px-2"></div>
-            </div>
-            <div class="col-md-4">
-            <div class="card-body">
-                <div class="text-center">
-                <div class="dropdown">
-                    <button
-                    class="btn btn-sm btn-outline-primary dropdown-toggle"
-                    type="button"
-                    id="growthReportId"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >
-                    2025
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                    <a class="dropdown-item" href="javascript:void(0);">2024</a>
-                    <a class="dropdown-item" href="javascript:void(0);">2023</a>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div id="growthChart"></div>
-            <div class="text-center fw-semibold pt-3 mb-2">62% Growth</div>
 
-            <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                <div class="d-flex">
-                <div class="me-2">
-                    <span class="badge bg-label-primary p-2"><i class="bx bx-wallet text-primary"></i></span>
-                </div>
-                <div class="d-flex flex-column">
-                    <small>2025</small>
-                    <h6 class="mb-0">153</h6>
-                </div>
-                </div>
-                <div class="d-flex">
-                <div class="me-2">
-                    <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
-                </div>
-                <div class="d-flex flex-column">
-                    <small>2024</small>
-                    <h6 class="mb-0">128</h6>
-                </div>
+        <div class="card mt-3">
+            <div class="d-flex align-items-end row">
+                <div class="card-body">
+                @if( isset( $currentExam ) )
+
+                    <table class="table table-bordered table-striped">
+                        <tr class="text-center">
+                            <th  colspan="2" class="text-info fw-bold">Currently Processing the below Exam Data</th>
+                        </tr>    
+                        <tr>
+                            <th>Ministry / Division / Organization</th>
+                            <td>{{ $currentExam->entity }}</td>
+                        </tr>
+                        <tr>
+                            <th>Post Code</th>
+                            <td>{{ $currentExam->post_code }}</td>
+                        </tr>
+                        <tr>
+                            <th>Post Name & Grade</th>
+                            <td>{{ $currentExam->post_name }} (Grade {{ $currentExam->grade }})</td>
+                        </tr>
+                        <tr>
+                            <th>Exam Type</th>
+                            <td>{{ $currentExam->type }}</td>
+                        </tr>
+                    </table>
+
+    <hr class="mb-3">
+                @else
+                    <p class="alert alert-warning fw-bold text-center">Currently no exam is set for start processing. Please set anyone of the exam as current.</p>     
+                @endif
                 </div>
             </div>
-            </div>
         </div>
-        </div>
+
     </div>
-    <!--/ Total Revenue -->
-    <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-        <div class="row">
-        <div class="col-6 mb-4">
-            <div class="card">
-            <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                    <img src="{{ asset('assets/img/icons/unicons/paypal.png') }}" alt="Credit Card" class="rounded" />
-                </div>
-                <div class="dropdown">
-                    <button
-                    class="btn p-0"
-                    type="button"
-                    id="cardOpt4"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
-                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
-                </div>
-                </div>
-                <span class="d-block mb-1">Recommendations</span>
-                <h3 class="card-title text-nowrap mb-2">2458</h3>
-                <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>This Month - 1825</small>
-            </div>
-            </div>
-        </div>
-        <div class="col-6 mb-4">
-            <div class="card">
-            <div class="card-body">
-                <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                    <img src="{{ asset('assets/img/icons/unicons/cc-primary.png') }}" alt="Credit Card" class="rounded" />
-                </div>
-                <div class="dropdown">
-                    <button
-                    class="btn p-0"
-                    type="button"
-                    id="cardOpt1"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    >
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                    </div>
-                </div>
-                </div>
-                <span class="fw-semibold d-block mb-1">User Count</span>
-                <h3 class="card-title mb-2">8</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>4 this month</small>
-            </div>
-            </div>
-        </div>
-        <div class="col-12 mb-4">
-            <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                    <div class="card-title">
-                    <h5 class="text-nowrap mb-2">Exam Report</h5>
-                    <span class="badge bg-label-warning rounded-pill">Year 2025</span>
-                    </div>
-                    <div class="mt-sm-auto">
-                    <small class="text-success text-nowrap fw-semibold"
-                        ><i class="bx bx-chevron-up"></i>12%</small
-                    >
-                    <h3 class="mb-0">13</h3>
-                    </div>
-                </div>
-                <div id="profileReportChart"></div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
+</div>

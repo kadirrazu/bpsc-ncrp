@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Exam;
+
 class SessionController extends Controller
 {
     /**
@@ -54,5 +56,14 @@ class SessionController extends Controller
         ])->onlyInput('email');
 
     } //End of function processLogin()
+
+    public function serveDashboard()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.dashboard', [
+            'currentExam' => $currentExam
+        ]);
+    }
 
 } //End of Class 'SessionController'

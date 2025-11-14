@@ -31,9 +31,7 @@ Route::post('/login', [SessionController::class, 'processLogin']);
 
 Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard.dashboard');
-    });
+    Route::get('/dashboard', [SessionController::class, 'serveDashboard']);
 
     Route::get('/profile', [UserProfileController::class, 'viewUserProfile']);
     Route::get('/change-password', [UserProfileController::class, 'passwordChangeWindow']);
@@ -112,6 +110,10 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/score-frequency-report', [ReportController::class, 'scoreFrequencyReport']);
     Route::get('/eh-balance-report', [ReportController::class, 'ehBalanceReport']);
     Route::get('/answer-key-report', [ReportController::class, 'answerKeyReport']);
+    Route::get('/print-result', [ReportController::class, 'printResultOptionView']);
+    Route::get('/print-result-report', [ReportController::class, 'printResultWithMarks']);
+    Route::get('/bnd-wise-result-print', [ReportController::class, 'bndWiseResult']);
+    Route::get('/generate-txt-file-result', [ReportController::class, 'generateResultTextFile']);
 
     Route::get('/master-configs', [ConfigurationController::class, 'setMasterConfigs']);
     Route::post('/master-configs', [ConfigurationController::class, 'updateMasterConfigs']);

@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="content-footer footer bg-footer-theme">
+<footer class="content-footer footer bg-footer-theme mb-2">
     <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
     <div class="mb-2 mb-md-0">
         ©
@@ -10,8 +10,8 @@
     </div>
     <div>
         <a
-        href="#"
-        target="_blank"
+        href="{{ url('/master-configs') }}"
+        target=""
         class="footer-link me-4"
         >Master Configurations</a>
     </div>

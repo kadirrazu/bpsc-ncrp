@@ -177,10 +177,209 @@ class ReportController extends Controller
             'd_count' => $optionDCount,
         ];
 
+        $optionACount = 0;
+        $optionBCount = 0;
+        $optionCCount = 0;
+        $optionDCount = 0;
+
+        for( $i=0; $i<strlen( $correctAnswers[2] ); $i++ )
+        {
+            if( $correctAnswers[2][$i] == 'A' )
+            {
+                $optionACount++;
+            }
+            else if( $correctAnswers[2][$i] == 'B' )
+            {
+                $optionBCount++;
+            }
+            else if( $correctAnswers[2][$i] == 'C' )
+            {
+                $optionCCount++;
+            }
+            else if( $correctAnswers[2][$i] == 'D' )
+            {
+                $optionDCount++;
+            }
+        }
+
+        $set2Count = [
+            'a_count' => $optionACount,
+            'b_count' => $optionBCount,
+            'c_count' => $optionCCount,
+            'd_count' => $optionDCount,
+        ];
+
+        $optionACount = 0;
+        $optionBCount = 0;
+        $optionCCount = 0;
+        $optionDCount = 0;
+
+        for( $i=0; $i<strlen( $correctAnswers[3] ); $i++ )
+        {
+            if( $correctAnswers[3][$i] == 'A' )
+            {
+                $optionACount++;
+            }
+            else if( $correctAnswers[3][$i] == 'B' )
+            {
+                $optionBCount++;
+            }
+            else if( $correctAnswers[3][$i] == 'C' )
+            {
+                $optionCCount++;
+            }
+            else if( $correctAnswers[3][$i] == 'D' )
+            {
+                $optionDCount++;
+            }
+        }
+
+        $set3Count = [
+            'a_count' => $optionACount,
+            'b_count' => $optionBCount,
+            'c_count' => $optionCCount,
+            'd_count' => $optionDCount,
+        ];
+
+        $optionACount = 0;
+        $optionBCount = 0;
+        $optionCCount = 0;
+        $optionDCount = 0;
+
+        for( $i=0; $i<strlen( $correctAnswers[4] ); $i++ )
+        {
+            if( $correctAnswers[4][$i] == 'A' )
+            {
+                $optionACount++;
+            }
+            else if( $correctAnswers[4][$i] == 'B' )
+            {
+                $optionBCount++;
+            }
+            else if( $correctAnswers[4][$i] == 'C' )
+            {
+                $optionCCount++;
+            }
+            else if( $correctAnswers[4][$i] == 'D' )
+            {
+                $optionDCount++;
+            }
+        }
+
+        $set4Count = [
+            'a_count' => $optionACount,
+            'b_count' => $optionBCount,
+            'c_count' => $optionCCount,
+            'd_count' => $optionDCount,
+        ];
+
         return view('dashboard.reports.answer-key-report',[
             'set1Answers' => $correctAnswers[1] ?? null,
-            'set1Count' => $set1Count
+            'set1Count' => $set1Count,
+            'set2Answers' => $correctAnswers[2] ?? null,
+            'set2Count' => $set2Count,
+            'set3Answers' => $correctAnswers[3] ?? null,
+            'set3Count' => $set3Count,
+            'set4Answers' => $correctAnswers[4] ?? null,
+            'set4Count' => $set4Count,
         ]);
+    }
+
+    public function printResultOptionView()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        return view('dashboard.reports.result-print-options',[
+            'exam' => $currentExam,
+        ]);
+    }
+
+    public function printResultWithMarks()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $resultTable = DB::table('etype_data')
+                        ->join('htype_data', 'etype_data.hex_code1', '=', 'htype_data.hex_code1')
+                        ->join('candidates', 'candidates.reg_number', '=', 'etype_data.reg_number')
+                        ->select(
+                            'etype_data.reg_number',
+                            'etype_data.set_code',
+                            'htype_data.final_mark',
+                            'htype_data.result_status',
+                            'candidates.name',
+                            'candidates.district',
+                        )
+                        ->where('htype_data.result_status', 'PASSED')
+                        ->orderBy('etype_data.reg_number', 'ASC')
+                        ->get();
+
+        return view('dashboard.reports.result-print-report',[
+            'resultTable' => $resultTable,
+        ]);
+    }
+
+    public function bndWiseResult()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $resultTable = DB::table('etype_data')
+                        ->join('htype_data', 'etype_data.hex_code1', '=', 'htype_data.hex_code1')
+                        ->join('candidates', 'candidates.reg_number', '=', 'etype_data.reg_number')
+                        ->select(
+                            'etype_data.reg_number',
+                            'etype_data.set_code',
+                            'etype_data.bnd_number',
+                            'htype_data.final_mark',
+                            'htype_data.result_status',
+                            'candidates.name',
+                            'candidates.district',
+                        )
+                        ->where('htype_data.result_status', 'PASSED')
+                        ->orderBy('etype_data.reg_number', 'ASC')
+                        ->get();
+
+        $groupedResults = $resultTable->groupBy('bnd_number');
+
+        return view('dashboard.reports.result-bndwise-print-report',[
+            'groupedResults' => $groupedResults
+        ]);
+    }
+
+    public function generateResultTextFile()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $resultTable = DB::table('etype_data')
+                        ->join('htype_data', 'etype_data.hex_code1', '=', 'htype_data.hex_code1')
+                        ->select(
+                            'etype_data.reg_number',
+                            'htype_data.result_status',
+                        )
+                        ->where('htype_data.result_status', 'PASSED')
+                        ->orderBy('etype_data.reg_number', 'ASC')
+                        ->get();
+
+        $total = 1;
+        $endIndex = $resultTable->count();
+
+        echo "<br><strong>Ministry / Division / Organization: </strong>" . $currentExam->entity . ";<br>";
+        echo "<strong>Post Code & Title: </strong>" . $currentExam->post_code . ' - ' . $currentExam->post_name . ";<br><br>";
+        echo "<strong>Final Result - </strong><br><br>";
+
+        foreach( $resultTable as $row )
+        {
+            echo $row->reg_number;
+
+            if($total == $endIndex )
+            {
+                echo "\t" . 'Total = ' . $total;
+            }
+            else{
+                echo "\t";
+            }
+            
+            $total++;
+        }
     }
 
 } //End of the Class
