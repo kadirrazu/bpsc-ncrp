@@ -4,7 +4,7 @@
         <span class="text-muted fw-light">Report / </span>Hexcode Unmatch Summary
     </h4>
 
-    <div class="report-body">
+    <div class="report-body" id="div-to-print">
 
         <div class="e-unmatched mb-3">
 
@@ -75,5 +75,22 @@
         </div>
 
     </div>
+
+    @if( (isset($e_unmatched) && $e_unmatched > 0) || (isset($h_unmatched) && $h_unmatched > 0))
+
+    <button class="btn btn-secondary" onclick="printReportDiv('div-to-print')">Print Report</button>
+
+    <script>
+        function printReportDiv(divId) {
+            var printContents = document.getElementById(divId).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+
+    @endif
 
 </x-layout-dashboard>

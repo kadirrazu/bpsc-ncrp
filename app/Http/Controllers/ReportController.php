@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Exam;
+use App\Models\Answer;
 
 class ReportController extends Controller
 {
@@ -86,4 +87,100 @@ class ReportController extends Controller
 
     }
 
-}
+    public function scoreFrequencyReport()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $scoreFrequencyData = DB::table('htype_data')
+                            ->select('final_mark', DB::raw('COUNT(*) as candidate_count'))
+                            ->where('post_code', $currentExam->post_code)
+                            ->where('hex_matched', 1)
+                            ->where('final_mark', '!=', null)
+                            ->groupBy('final_mark')
+                            ->orderBy('final_mark', 'DESC')->get();
+
+        return view('dashboard.reports.score-frequency-report',[
+            'scoreFrequencyData' => $scoreFrequencyData,
+        ]);
+    }
+
+    public function ehBalanceReport()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+
+        $eTypeBalance = DB::table('etype_data')
+                        ->select('bnd_number', DB::raw('COUNT(*) as script_count'))
+                        ->where('post_code', $currentExam->post_code)
+                        ->groupBy('bnd_number')
+                        ->orderBy('bnd_number', 'ASC')->get();
+        
+        $hTypeBalance = DB::table('htype_data')
+                        ->select('bnd_number', DB::raw('COUNT(*) as script_count'))
+                        ->where('post_code', $currentExam->post_code)
+                        ->groupBy('bnd_number')
+                        ->orderBy('bnd_number', 'ASC')->get();
+
+        return view('dashboard.reports.eh-balance-report',[
+            'eTypeBalance' => $eTypeBalance,
+            'hTypeBalance' => $hTypeBalance,
+        ]);
+
+    }
+
+    public function answerKeyReport()
+    {
+        $currentExam = Exam::where('is_current', 1)->first();
+        
+        $answerTable = DB::table('answers')
+            ->select('set_code', 'answers')
+            ->where('exam_id', $currentExam->id)
+            ->where('post_code', $currentExam->post_code)
+            ->get();
+
+        // Create lookup array for correct answers
+        $correctAnswers = $answerTable->pluck('answers', 'set_code')->toArray();
+
+        $set1Count = [];
+        $set2Count = [];
+        $set3Count = [];
+        $set4Count = [];
+
+        $optionACount = 0;
+        $optionBCount = 0;
+        $optionCCount = 0;
+        $optionDCount = 0;
+
+        for( $i=0; $i<strlen( $correctAnswers[1] ); $i++ )
+        {
+            if( $correctAnswers[1][$i] == 'A' )
+            {
+                $optionACount++;
+            }
+            else if( $correctAnswers[1][$i] == 'B' )
+            {
+                $optionBCount++;
+            }
+            else if( $correctAnswers[1][$i] == 'C' )
+            {
+                $optionCCount++;
+            }
+            else if( $correctAnswers[1][$i] == 'D' )
+            {
+                $optionDCount++;
+            }
+        }
+
+        $set1Count = [
+            'a_count' => $optionACount,
+            'b_count' => $optionBCount,
+            'c_count' => $optionCCount,
+            'd_count' => $optionDCount,
+        ];
+
+        return view('dashboard.reports.answer-key-report',[
+            'set1Answers' => $correctAnswers[1] ?? null,
+            'set1Count' => $set1Count
+        ]);
+    }
+
+} //End of the Class

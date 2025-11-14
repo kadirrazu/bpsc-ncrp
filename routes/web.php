@@ -12,6 +12,8 @@ use App\Http\Controllers\ExamManagementController;
 use App\Http\Controllers\DataProcessingController;
 use App\Http\Controllers\IssueManagementController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResultProcessingController;
+use App\Http\Controllers\ConfigurationController;
 
 Route::get('/', function () {
 
@@ -97,12 +99,22 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::post('/upload-regi-file', [DataProcessingController::class, 'uploadRegiFileProcessor']);
     Route::get('/convert-regi-file', [DataProcessingController::class, 'convertRegiFile']);
 
-    Route::get('/upload-answer-file', [DataProcessingController::class, 'uploadAnswerFileView']);
-    Route::post('/upload-answer-file', [DataProcessingController::class, 'uploadAnsweKeyFileProcessor']);
-    Route::get('/convert-answer-file', [DataProcessingController::class, 'convertAnswerFile']);
-    Route::get('/calculate-marks', [DataProcessingController::class, 'calculateMarks']);
+    Route::get('/upload-answer-file', [ResultProcessingController::class, 'uploadAnswerFileView']);
+    Route::post('/upload-answer-file', [ResultProcessingController::class, 'uploadAnsweKeyFileProcessor']);
+    Route::get('/convert-answer-file', [ResultProcessingController::class, 'convertAnswerFile']);
+    Route::get('/calculate-marks', [ResultProcessingController::class, 'calculateMarks']);
+    Route::get('/cut-mark-posting', [ResultProcessingController::class, 'cutMarkPostingView']);
+    Route::post('/cut-mark-posting', [ResultProcessingController::class, 'cutMarkPostingProcessor']);
+    Route::get('/delete-cut-mark', [ResultProcessingController::class, 'deleteCutMark']);
+    Route::get('/generate-result-status', [ResultProcessingController::class, 'generateResultStatus']);
 
     Route::get('/hexcode-unmatch-report', [ReportController::class, 'hexcodeUnmatchReport']);
+    Route::get('/score-frequency-report', [ReportController::class, 'scoreFrequencyReport']);
+    Route::get('/eh-balance-report', [ReportController::class, 'ehBalanceReport']);
+    Route::get('/answer-key-report', [ReportController::class, 'answerKeyReport']);
+
+    Route::get('/master-configs', [ConfigurationController::class, 'setMasterConfigs']);
+    Route::post('/master-configs', [ConfigurationController::class, 'updateMasterConfigs']);
 
 });
 

@@ -114,53 +114,43 @@
             <div>Reports</div>
             </a>
             <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="{{ url('/exam-status-report') }}" class="menu-link">
-                <div>Current Exam Status</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/absent-list-report') }}" class="menu-link">
-                <div>Absent List</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/hexcode-unmatch-report') }}" class="menu-link">
-                <div>Hexcode Unmatch Report</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/eh-balance-report') }}" class="menu-link">
-                <div>E/H Balance Report</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/answer-key-report') }}" class="menu-link">
-                <div>Answer Key Report</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/score-frequency-report') }}" class="menu-link">
-                <div>Score Frequency</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/print-result') }}" class="menu-link">
-                <div>Result Printing</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('/export-result') }}" class="menu-link">
-                <div>Export Result</div>
-                </a>
-            </li>
+                <li class="menu-item">
+                    <a href="{{ url('/eh-balance-report') }}" class="menu-link">
+                    <div>E/H Balance Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/hexcode-unmatch-report') }}" class="menu-link">
+                    <div>Hexcode Unmatch Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/answer-key-report') }}" class="menu-link">
+                    <div>Answer Key Report</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/score-frequency-report') }}" class="menu-link">
+                    <div>Score Frequency</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/absent-list-report') }}" class="menu-link">
+                    <div>Absent List</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('/print-result') }}" class="menu-link">
+                    <div>Result Printing</div>
+                    </a>
+                </li>
             </ul>
         </li>
         
         <!-- Configurations -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
         <li class="menu-item">
-            <a href="{{ url('/master-configs') }}" target="_blank" class="menu-link">
+            <a href="{{ url('/master-configs') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-save"></i>
             <div data-i18n="Support">Master Configurations</div>
             </a>

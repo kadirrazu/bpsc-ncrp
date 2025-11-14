@@ -32,7 +32,7 @@
                             </td>
                             <td>
                                 @if( $answerFile->conversion_status === 0 )    
-                                    <a href="{{ url('convert-answer-file') }}" class="btn btn-sm btn-primary">Convert File to SQL</a>
+                                    <a href="{{ url('convert-answer-file') }}" class="btn btn-sm btn-primary">Convert DATA and Import to MySQL</a>
                                 @else
                                     <span class="text-info">CONVERSION DONE</span>
                                 @endif
@@ -43,7 +43,7 @@
                     @if($answerFile->conversion_status === 1)
                         <div class="mark-generation mt-4" x-data="{
                             confirm : function(event){
-                                result = confirm('Sure? You want to calculate candidates marks?');
+                                result = confirm('Sure? You want to calculate candidates mark?');
                                 if( result === false){
                                     event.preventDefault()
                                 }
