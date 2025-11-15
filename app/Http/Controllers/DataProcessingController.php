@@ -765,6 +765,11 @@ class DataProcessingController extends Controller
             return redirect()->back()->with('error', '404 - File not found.');
         }
 
+        // Convert any encoding → UTF-8
+        $contents = mb_convert_encoding($contents, 'UTF-8', 'UTF-8, ISO-8859-1, Windows-1252, UTF-16LE, UTF-16BE');
+
+        $contents = preg_replace('/^\xEF\xBB\xBF/', '', $contents);
+
         // Get file content
         $csvData = $contents;
 
@@ -779,16 +784,27 @@ class DataProcessingController extends Controller
         $count = 0;
         foreach ($rows as $row) {
             if (count($row) == count($header)) {
+
+                // Optional: sanitize to UTF-8
+                $row = array_map(fn($v) => mb_convert_encoding($v, 'UTF-8', 'UTF-8, ISO-8859-1, Windows-1252, UTF-16LE, UTF-16BE'), $row);
+
                 $data[$count] = array_combine($header, $row);
                 $data[$count]['exam_id'] = $currentExam->id;
                 $data[$count]['post_code'] = $currentExam->post_code;
+
                 $count++;
             }
         }
 
         DB::table('candidates')->truncate();
 
-        $result = Candidate::insert($data);
+        $result = 0;
+
+        //Insert in safe chunks
+        foreach (array_chunk($data, 500) as $chunk) {
+            Candidate::insert($chunk);
+            $result = 1;
+        }
 
         if($result){
             Regifile::where('exam_id', $currentExam->id)->where('post_code', $currentExam->post_code)->update([
