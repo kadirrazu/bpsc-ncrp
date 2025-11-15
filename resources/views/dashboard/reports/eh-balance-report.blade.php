@@ -6,6 +6,8 @@
 
     <div class="report-body" id="div-to-print">
 
+        @include('partials.report-header')
+
         <div class="e-unmatched mb-3">
 
             <p class="text-info">
@@ -67,18 +69,7 @@
 
     @if( isset($eTypeBalance) && $eTypeBalance->count() > 0 )
 
-    <button class="btn btn-secondary" onclick="printReportDiv('div-to-print')">Print Report</button>
-
-    <script>
-        function printReportDiv(divId) {
-            var printContents = document.getElementById(divId).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-    </script>
+        @include('partials.report-print-btn')
 
     @endif
 

@@ -83,6 +83,7 @@ class ReportController extends Controller
             'h_unmatched' => $unMatchCountH,
             'e_unmatched_array' => $unMatchedIdsE,
             'h_unmatched_array' => $unMatchedIdsH,
+            'currentExam' => $currentExam,
         ]);
 
     }
@@ -101,6 +102,7 @@ class ReportController extends Controller
 
         return view('dashboard.reports.score-frequency-report',[
             'scoreFrequencyData' => $scoreFrequencyData,
+            'currentExam' => $currentExam,
         ]);
     }
 
@@ -123,6 +125,7 @@ class ReportController extends Controller
         return view('dashboard.reports.eh-balance-report',[
             'eTypeBalance' => $eTypeBalance,
             'hTypeBalance' => $hTypeBalance,
+            'currentExam' => $currentExam,
         ]);
 
     }
@@ -282,6 +285,7 @@ class ReportController extends Controller
             'set3Count' => $set3Count,
             'set4Answers' => $correctAnswers[4] ?? null,
             'set4Count' => $set4Count,
+            'currentExam' => $currentExam,
         ]);
     }
 
@@ -291,6 +295,7 @@ class ReportController extends Controller
 
         return view('dashboard.reports.result-print-options',[
             'exam' => $currentExam,
+            'currentExam' => $currentExam,
         ]);
     }
 
@@ -315,6 +320,7 @@ class ReportController extends Controller
 
         return view('dashboard.reports.result-print-report',[
             'resultTable' => $resultTable,
+            'currentExam' => $currentExam,
         ]);
     }
 
@@ -341,7 +347,8 @@ class ReportController extends Controller
         $groupedResults = $resultTable->groupBy('bnd_number');
 
         return view('dashboard.reports.result-bndwise-print-report',[
-            'groupedResults' => $groupedResults
+            'groupedResults' => $groupedResults,
+            'currentExam' => $currentExam,
         ]);
     }
 
