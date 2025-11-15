@@ -81,6 +81,11 @@ Route::middleware([AuthenticatedUsersOnlyAccess::class])->group(function () {
     Route::get('/mark-own-hexmissmatch-issues-htype', [IssueManagementController::class, 'markHTypeOwnHexCodeMissMatches']);
     Route::get('/hexmissmatch-data-etype', [IssueManagementController::class, 'viewETypeHexCodeMissMatches']);
     Route::get('/hexmissmatch-data-htype', [IssueManagementController::class, 'viewHTypeHexCodeMissMatches']);
+    Route::get('/mark-et-script-duplicate-issues', [IssueManagementController::class, 'markETypeScriptDupicateIssues']);
+    Route::get('/mark-ht-script-duplicate-issues', [IssueManagementController::class, 'markHTypeScriptDupicateIssues']);
+    Route::get('/script-duplicate-data-etype', [IssueManagementController::class, 'viewEtypeScriptDuplicateData']);
+    Route::get('/script-duplicate-data-htype', [IssueManagementController::class, 'viewHtypeScriptDuplicateData']);
+    Route::get('/mark-non-duplicate-etype/{id}', [IssueManagementController::class, 'markNonDuplicateOnETypeData']);
 
 
     Route::get('/generate-hexcode', [DataProcessingController::class, 'generateHexcodeView']);

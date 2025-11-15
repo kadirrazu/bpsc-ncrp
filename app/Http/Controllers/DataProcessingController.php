@@ -179,7 +179,12 @@ class DataProcessingController extends Controller
     {
         $postCode = $request->postcode;
 
-        $eTypeDataByPostCode = DB::table('etype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
+        $eTypeDataByPostCode = DB::table('etype_data')
+                                ->where('post_code', $postCode)
+                                ->where('litho_issue', '!==', 1)
+                                ->where('duplicate_script', '!==', 1)
+                                ->where('invalid_fillup', '!==', 1)
+                                ->get();
 
         $hexArray = [];
 
@@ -229,7 +234,11 @@ class DataProcessingController extends Controller
     {
         $postCode = $request->postcode;
 
-        $hTypeDataByPostCode = DB::table('htype_data')->where('post_code', $postCode)->where('litho_issue', '!==', 1)->get();
+        $hTypeDataByPostCode = DB::table('htype_data')
+                                ->where('post_code', $postCode)
+                                ->where('litho_issue', '!==', 1)
+                                ->where('duplicate_script', '!==', 1)
+                                ->get();
 
         $hexArray = [];
 
@@ -298,7 +307,15 @@ class DataProcessingController extends Controller
             $query->where('hex_issue', 1);
         }
         else{
-            $query->where('center_issue', 1)->orWhere('reg_number_issue', 1)->orWhere('set_code_issue', 1)->orWhere('litho_issue', 1)->orWhere('hex_issue', 1);
+            $query->where(function ($query) {
+                $query->where('center_issue', 1)
+                    ->orWhere('reg_number_issue', 1)
+                    ->orWhere('set_code_issue', 1)
+                    ->orWhere('litho_issue', 1)
+                    ->orWhere('hex_issue', 1);
+            })
+            ->where('invalid_fillup', 0)
+            ->where('duplicate_script', 0);
         }
 
         $returnedData = $query->get();

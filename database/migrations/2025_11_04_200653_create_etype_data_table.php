@@ -45,6 +45,8 @@ return new class extends Migration
             $table->integer('updated_by')->nullable();
             $table->string('general_status')->nullable();
             $table->string('solve_status')->nullable();
+            $table->boolean('invalid_fillup')->default(0);
+            $table->boolean('duplicate_script')->default(0);
             $table->timestamps();
             $table->index(['reg_number_issue', 'set_code_issue', 'litho_issue']);
         });

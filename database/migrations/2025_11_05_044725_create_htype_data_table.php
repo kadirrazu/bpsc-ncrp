@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('general_status')->nullable();
             $table->string('solve_status')->nullable();
             $table->string('result_status')->nullable();
+            $table->boolean('duplicate_script')->default(0);
             $table->timestamps();
             $table->index(['bnd_number', 'litho_issue', 'hex_issue', 'final_mark']);
         });

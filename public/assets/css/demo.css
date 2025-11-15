@@ -181,5 +181,10 @@
   text-decoration: line-through !important;
 }
 
+.status-issue-disp{
+  display: block;
+  font-size: 12px;
+}
+
 
 

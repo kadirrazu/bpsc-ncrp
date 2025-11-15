@@ -53,7 +53,7 @@ class ConfigurationSeeder extends Seeder
                     'updated_at' => Carbon::now() 
                 ],
                 [
-                    'key' => 'invalidate_fillup_error', 
+                    'key' => 'reject_invalid_fillup',
                     'value' => '1', 
                     'remarks' => '1 for making invalid, 0 for valid.', 
                     'created_at' => Carbon::now(), 

@@ -51,6 +51,18 @@
                             <th>Exam Type</th>
                             <td>{{ $currentExam->type }}</td>
                         </tr>
+                        <tr>
+                            <th>Uploaded E-TYPE Script</th>
+                            <td>
+                                {{ \Illuminate\Support\Facades\DB::table('etype_data')->where('litho_issue', '!==', 1)->where('duplicate_script', '!==', 1)->get()->count(); }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Uploaded H-TYPE Script</th>
+                            <td>
+                                {{ \Illuminate\Support\Facades\DB::table('htype_data')->where('litho_issue', '!==', 1)->where('duplicate_script', '!==', 1)->get()->count(); }}
+                            </td>
+                        </tr>
                     </table>
 
     <hr class="mb-3">

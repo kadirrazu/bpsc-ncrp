@@ -39,27 +39,52 @@
             <td>
                 @if(isset($data->center_issue) && $data->center_issue === 1)
                     <span class="text-primary fw-bold">[ CENTER ];</span><br>
-                    <span class="text-primary">[ {{ $data->center_status }} ];</span><br>
+                    <span class="text-primary">
+                        @php $status = explode(';', $data->center_status); @endphp
+                        @foreach( $status as $stat )
+                            <span class="status-issue-disp">{{ $stat }}</span>
+                        @endforeach
+                    </span>
                 @endif
 
                 @if(isset($data->reg_number_issue) && $data->reg_number_issue === 1)
                     <span class="text-warning fw-bold">[ REG ];</span><br>
-                    <span class="text-warning text-sm">[ {{ $data->reg_number_status }} ];</span><br>
+                    <span class="text-warning">
+                        @php $status = explode(';', $data->reg_number_status); @endphp
+                        @foreach( $status as $stat )
+                            <span class="status-issue-disp">{{ $stat }}</span>
+                        @endforeach
+                    </span>
                 @endif
 
                 @if(isset($data->set_code_issue) && $data->set_code_issue === 1)
                     <span class="text-info fw-bold">[ SET ];</span><br>
-                    <span class="text-info text-sm">[ {{ $data->set_code_status }} ];</span><br>
+                    <span class="text-info">
+                        @php $status = explode(';', $data->set_code_status); @endphp
+                        @foreach( $status as $stat )
+                            <span class="status-issue-disp">{{ $stat }}</span>
+                        @endforeach
+                    </span>
                 @endif
 
                 @if(isset($data->litho_issue) && $data->litho_issue === 1)
                     <span class="text-danger fw-bold">[ LITHO ];</span><br>
-                    <span class="text-danger text-sm">[ {{ $data->litho_status }} ];</span><br>
+                    <span class="text-danger">
+                        @php $status = explode(';', $data->litho_status); @endphp
+                        @foreach( $status as $stat )
+                            <span class="status-issue-disp">{{ $stat }}</span>
+                        @endforeach
+                    </span>
                 @endif
 
                 @if(isset($data->hex_issue) && $data->hex_issue === 1)
                     <span class="text-primary fw-bold">[ HEX ];</span><br>
-                    <span class="text-primary text-sm">[ {{ $data->hex_status }} ];</span><br>
+                    <span class="text-primary">
+                        @php $status = explode(';', $data->hex_status); @endphp
+                        @foreach( $status as $stat )
+                            <span class="status-issue-disp">{{ $stat }}</span>
+                        @endforeach
+                    </span>
                 @endif
             </td>
         </tr>

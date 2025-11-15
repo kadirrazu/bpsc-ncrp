@@ -248,6 +248,43 @@ $fileTypes = [
                                     </table>
                                 </div>
 
+                                
+
+                                <div id="mark-script-duplicate-issues-etype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>E-TYPE SCRIPT DUPLICATION CHECKING</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $etScriptDuplicate = $issueReportTable->where('issue_type', 'etype_script_duplicate')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($etScriptDuplicate->run_time) && $etScriptDuplicate->run_time != '' )
+                                                        {{ $etScriptDuplicate->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('script-duplicate-data-etype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $etScriptDuplicate->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary my-2" href="{{ url('mark-et-script-duplicate-issues') }}">
+                                                    CHECK FOR E-TYPE SCRIPT DUPLICATION
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
 
@@ -348,6 +385,41 @@ $fileTypes = [
                                             <td>
                                                 <a class="btn btn-sm btn-secondary my-2" href="{{ url('mark-hexmissmatch-issues-htype') }}">
                                                     MARK HEX CODE MISSMATCH (WITH E-TYPE DATA)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div id="mark-script-duplicate-issues-htype">
+                                    <table class="table border table-borderless mb-2">
+                                        <tr>
+                                            <th>H-TYPE SCRIPT DUPLICATION CHECKING</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-info">
+                                                    Last Run:  
+
+                                                    @php 
+                                                        $htScriptDuplicate = $issueReportTable->where('issue_type', 'htype_script_duplicate')->first(); 
+                                                    @endphp
+                                                    
+                                                    @if( isset($htScriptDuplicate->run_time) && $htScriptDuplicate->run_time != '' )
+                                                        {{ $htScriptDuplicate->run_time }},
+                                                        <span class="text-secondary">
+                                                            Count: <a href="{{ url('script-duplicate-data-htype') }}" class="text-danger text-decoration-underline" title="View Issues">{{ $htScriptDuplicate->issue_count }}</a>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-danger">Never</span>
+                                                    @endif
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary my-2" href="{{ url('mark-ht-script-duplicate-issues') }}">
+                                                    CHECK FOR H-TYPE SCRIPT DUPLICATION
                                                 </a>
                                             </td>
                                         </tr>
