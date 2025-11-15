@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Exam;
 use App\Models\Datafile;
 use App\Models\Regifile;
@@ -158,6 +159,11 @@ class ResultProcessingController extends Controller
                 'htype_data.id as ht_id',
                 'htype_data.answers'
             )
+            ->where('etype_data.duplicate_script', 0)
+            ->where('etype_data.invalid_fillup', 0)
+            ->where('htype_data.duplicate_script', 0)
+            ->where('etype_data.hex_code1', '!=', '')
+            ->where('htype_data.hex_code1', '!=', '')
             ->get();
 
         // Final results per candidate

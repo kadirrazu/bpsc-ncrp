@@ -93,12 +93,16 @@ class ReportController extends Controller
         $currentExam = Exam::where('is_current', 1)->first();
 
         $scoreFrequencyData = DB::table('htype_data')
-                            ->select('final_mark', DB::raw('COUNT(*) as candidate_count'))
-                            ->where('post_code', $currentExam->post_code)
-                            ->where('hex_matched', 1)
-                            ->where('final_mark', '!=', null)
-                            ->groupBy('final_mark')
-                            ->orderBy('final_mark', 'DESC')->get();
+                                ->select(
+                                    DB::raw('CAST(final_mark AS DECIMAL(10,2)) AS final_mark'),
+                                    DB::raw('COUNT(*) as candidate_count')
+                                )
+                                ->where('post_code', $currentExam->post_code)
+                                ->where('hex_matched', 1)
+                                ->whereNotNull('final_mark')
+                                ->groupBy(DB::raw('CAST(final_mark AS DECIMAL(10,2))'))
+                                ->orderBy(DB::raw('CAST(final_mark AS DECIMAL(10,2))'), 'DESC')
+                                ->get();
 
         return view('dashboard.reports.score-frequency-report',[
             'scoreFrequencyData' => $scoreFrequencyData,
